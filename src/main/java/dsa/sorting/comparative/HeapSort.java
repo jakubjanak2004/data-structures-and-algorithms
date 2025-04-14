@@ -1,6 +1,6 @@
 package dsa.sorting.comparative;
 
-import dsa.Utils;
+import static dsa.Utils.swap;
 
 public class HeapSort {
     /**
@@ -69,7 +69,7 @@ public class HeapSort {
         // if start isn't the biggest of the tree we swap it with the largest
         // and call recursively max-heapify on the largest element
         if (largest != start) {
-            Utils.swap(array, largest, start);
+            swap(array, largest, start);
             maxHeapify(array, largest, end);
         }
     }
@@ -107,7 +107,7 @@ public class HeapSort {
         // iterate form the last element of the heap array to the second element of the array
         for (int i = array.length - 1; i >= 1; i--) {
             // swapping first element and the iterated element
-            Utils.swap(array, 0, i);
+            swap(array, 0, i);
             // calling max-heapify on the [a1, a2, ..., a(iterated - 1)] sub array
             maxHeapify(array, 0, i - 1);
         }
