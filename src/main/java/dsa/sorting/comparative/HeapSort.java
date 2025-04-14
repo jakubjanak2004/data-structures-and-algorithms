@@ -1,5 +1,7 @@
 package dsa.sorting.comparative;
 
+import dsa.Utils;
+
 public class HeapSort {
     /**
      * <h1>Left Child Index</h1>

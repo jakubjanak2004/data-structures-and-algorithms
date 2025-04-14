@@ -1,5 +1,7 @@
 package dsa.sorting.comparative;
 
+import dsa.Utils;
+
 import java.util.Random;
 
 public class QuickSort {
