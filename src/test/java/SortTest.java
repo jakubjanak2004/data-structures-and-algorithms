@@ -1,7 +1,7 @@
-import dsa.sorting.HeapSort;
-import dsa.sorting.InsertionSort;
-import dsa.sorting.MergeSort;
-import dsa.sorting.QuickSort;
+import dsa.sorting.comparative.HeapSort;
+import dsa.sorting.comparative.InsertionSort;
+import dsa.sorting.comparative.MergeSort;
+import dsa.sorting.comparative.QuickSort;
 import org.junit.Test;
 
 import java.util.Arrays;

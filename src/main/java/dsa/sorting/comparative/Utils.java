@@ -1,4 +1,4 @@
-package dsa.sorting;
+package dsa.sorting.comparative;
 
 public class Utils {
     static void swap(int[] array, int i1, int i2) {
