@@ -2,6 +2,8 @@ import dsa.sorting.comparative.HeapSort;
 import dsa.sorting.comparative.InsertionSort;
 import dsa.sorting.comparative.MergeSort;
 import dsa.sorting.comparative.QuickSort;
+import dsa.sorting.linear.CountingSort;
+import dsa.sorting.linear.RadixSort;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -10,10 +12,47 @@ import java.util.Random;
 import static org.junit.Assert.assertArrayEquals;
 
 public class SortTest {
+    private int min = 0;
+    private int max = 1000;
+    private int numberOfElements = 10;
 
     private int[] getArray(){
         Random random = new Random();
-        return random.ints(1000, -1000, 1000).toArray();
+        return random.ints(numberOfElements, min, max+1).toArray();
+    }
+
+    @Test
+    public void testRadix() {
+        int[] original = getArray();
+
+        int[] expected = original.clone();
+        int[] actual = original.clone();
+
+        // sort using native sorting
+        Arrays.sort(expected);
+
+        // sort using my sort
+        RadixSort.radixSort(actual, max, 0, actual.length);
+
+        // assert the results
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testCounting() {
+        int[] original = getArray();
+
+        int[] expected = original.clone();
+        int[] actual = original.clone();
+
+        // sort using native sorting
+        Arrays.sort(expected);
+
+        // sort using my sort
+        CountingSort.countingSort(actual, max, 0, actual.length - 1);
+
+        // assert the results
+        assertArrayEquals(expected, actual);
     }
 
     @Test
