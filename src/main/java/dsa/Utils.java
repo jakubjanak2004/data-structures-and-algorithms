@@ -6,4 +6,10 @@ public class Utils {
         array[i1] = array[i2];
         array[i2] = temp;
     }
+
+    public static double[][] deepCopy2D(double[][] matrix) {
+        return java.util.Arrays.stream(matrix)
+                .map(double[]::clone)
+                .toArray(double[][]::new);
+    }
 }
