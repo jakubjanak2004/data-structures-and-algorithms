@@ -10,32 +10,37 @@ public class CountingSort {
      * <br><br>
      * The method assumes all values in the input range are non-negative and less than or equal to {@code max}.
      *
-     * @param array the array to be sorted (in place)
+     * @param input the array to be sorted (in place)
      * @param max the maximum expected value in the input range
-     * @param start the starting index (inclusive) of the segment to sort
-     * @param end the ending index (inclusive) of the segment to sort
      */
-    public static void countingSort(int[] array, int max, int start, int end) {
-        // create array with each index representing an integer from <0, 1, ..., max>
-        int[] countArray = new int[max + 1];
+    public static void countingSort(int[] input, int max) {
+        // create array holding the number of each element from 0 to max
+        int[] c = new int[max + 1];
 
-        // iterate from start to end of array
-        for (int k = start; k <= end; k++) {
-            // count array at index of the value at array should be increased by one
-            countArray[array[k]]++;
+        // for each element of the input increase the c at index of that element
+        for (int i : input) {
+            c[i] += 1;
         }
 
-        // initialise index at first element
-        int index = 0;
-        // iterate from first element to the last element of the count array
-        for (int i = 0; i < countArray.length; i++) {
-            // iterate count array at i times
-            for (int j = 0; j < countArray[i]; j++) {
-                // array at index will be equal to i(iteration through count array)
-                array[index] = i;
-                // increase index by one
-                index++;
-            }
+        // add previous value to iterated in array c
+        for (int i = 1; i < c.length; i++) {
+            c[i] += c[i - 1];
         }
+
+        // create new array sorted
+        int[] sorted = new int[input.length];
+        // iterate from last to first element of the input array
+        for (int i = input.length - 1; i >= 0; i--) {
+            // init current as input at iteration
+            int current = input[i];
+            // sorted at cumulative number of elements (-1 for 0 based indexing) is equal to current
+            sorted[c[current] - 1] = current;
+            // decrease the number of current in c
+            c[current]--;
+        }
+
+        // copy the sorted into input
+        // as the sorting should be in place
+        System.arraycopy(sorted, 0, input, 0, sorted.length);
     }
 }

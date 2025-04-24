@@ -1,8 +1,8 @@
 package dsa.sorting.comparative;
 
-import dsa.Utils;
-
 import java.util.Random;
+
+import static dsa.Utils.swap;
 
 public class QuickSort {
     // random object for randomized algorithms
@@ -16,7 +16,7 @@ public class QuickSort {
      * elements less than or equal to the pivot come before it, and greater elements after.
      *
      * @param array the array to partition
-     * @param left the starting index of the segment to partition
+     * @param left  the starting index of the segment to partition
      * @param right the ending index of the segment to partition (pivot)
      * @return the final position of the pivot element
      */
@@ -26,10 +26,10 @@ public class QuickSort {
         for (int j = left; j < right; j++) {
             if (array[j] <= pivot) {
                 i++;
-                Utils.swap(array, i, j);
+                swap(array, i, j);
             }
         }
-        Utils.swap(array, i + 1, right);
+        swap(array, i + 1, right);
         return i + 1;
     }
 
@@ -41,13 +41,31 @@ public class QuickSort {
      * two parts: elements less than the pivot and elements greater than the pivot.
      *
      * @param array the array to partition
-     * @param left the starting index of the segment to partition
+     * @param left  the starting index of the segment to partition
      * @param right the ending index of the segment to partition
      * @return the final position of the pivot element
      */
     static public int hoarePartition(int[] array, int left, int right) {
-        // todo implement
-        return 0;
+        int pivot = array[left];
+        int i = left - 1, j = right + 1;
+
+        while (true) {
+            // Find leftmost element greater
+            // than or equal to pivot
+            do {
+                i++;
+            } while (array[i] < pivot);
+
+            // Find rightmost element smaller
+            // than or equal to pivot
+            do {
+                j--;
+            } while (array[j] > pivot);
+
+            // If two pointers met.
+            if (i >= j) return j;
+            swap(array, i, j);
+        }
     }
 
     /**
@@ -60,7 +78,7 @@ public class QuickSort {
      * The method then proceeds with the standard Lomuto partitioning.
      *
      * @param array the array to partition
-     * @param left the starting index of the segment to partition
+     * @param left  the starting index of the segment to partition
      * @param right the ending index of the segment to partition
      * @return the final position of the pivot element
      */
@@ -68,31 +86,76 @@ public class QuickSort {
         // generate random integer from uniform distribution in range [left, right], therefore inclusive on both sides
         int i = QuickSort.random.nextInt(right - left + 1) + left;
         // swap the element at random position with the last element making it pivot
-        Utils.swap(array, i, right);
+        swap(array, i, right);
         // call Lomuto partition
         return lomutoPartition(array, left, right);
     }
 
     /**
-     * <h1>QuickSort Algorithm</h1>
+     * <h1>QuickSort Algorithm (Lomuto Partition)</h1>
      * <p>
-     * Recursively sorts the given array using the QuickSort algorithm and a custom partition function.
-     * It divides the array into subarrays around a pivot and sorts each subarray independently.
+     * Recursively sorts the given array using the QuickSort algorithm with Lomuto partition scheme.
+     * It selects a pivot element and partitions the array into elements less than and greater than the pivot,
+     * then recursively sorts the subarrays.
      *
      * @param array the array to be sorted
-     * @param left the starting index of the segment to sort
+     * @param left  the starting index of the segment to sort
      * @param right the ending index of the segment to sort
-     * @param partitionFunction the partition strategy used to select and position the pivot
      */
-    static public void quickSort(int[] array, int left, int right, PartitionFunctionInterface partitionFunction) {
+    static public void quickSortLomuto(int[] array, int left, int right) {
         // if left index is less than right index
         if (left < right) {
             // get pivot by calling the partition function
-            int pivot = partitionFunction.partition(array, left, right);
+            int pivot = lomutoPartition(array, left, right);
             // recursively call quick-sort on [a(left), ..., a(pivot - 1)]
-            quickSort(array, left, pivot - 1, partitionFunction);
-            // recursively call quick-sort on [a(pivot), ..., a(right)]
-            quickSort(array, pivot, right, partitionFunction);
+            quickSortLomuto(array, left, pivot - 1);
+            // recursively call quick-sort on [a(pivot + 1), ..., a(right)]
+            quickSortLomuto(array, pivot + 1, right);
+        }
+    }
+
+    /**
+     * <h1>Randomized QuickSort (Lomuto Partition)</h1>
+     * <p>
+     * Recursively sorts the given array using QuickSort and a randomized version of the Lomuto partition scheme.
+     * The pivot is chosen at random to improve performance on certain inputs.
+     *
+     * @param array the array to be sorted
+     * @param left  the starting index of the segment to sort
+     * @param right the ending index of the segment to sort
+     */
+    static public void randomizedQuickSortLomuto(int[] array, int left, int right) {
+        // if left index is less than right index
+        if (left < right) {
+            // get pivot by calling the partition function
+            int pivot = randomizedLomutoPartition(array, left, right);
+            // recursively call quick-sort on [a(left), ..., a(pivot - 1)]
+            quickSortLomuto(array, left, pivot - 1);
+            // recursively call quick-sort on [a(pivot + 1), ..., a(right)]
+            quickSortLomuto(array, pivot + 1, right);
+        }
+    }
+
+    /**
+     * <h1>QuickSort Algorithm (Hoare Partition)</h1>
+     * <p>
+     * Recursively sorts the given array using the QuickSort algorithm with Hoare partition scheme.
+     * It partitions the array into two parts where all elements on the left are less than or equal to the pivot
+     * and all elements on the right are greater than or equal to the pivot, then recursively sorts each subarray.
+     *
+     * @param array the array to be sorted
+     * @param left  the starting index of the segment to sort
+     * @param right the ending index of the segment to sort
+     */
+    static public void quickSortHoare(int[] array, int left, int right) {
+        // if left index is less than right index
+        if (left < right) {
+            // get pivot by calling the partition function
+            int pivot = hoarePartition(array, left, right);
+            // recursively call quick-sort on [a(left), ..., a(pivot)]
+            quickSortHoare(array, left, pivot);
+            // recursively call quick-sort on [a(pivot + 1), ..., a(right)]
+            quickSortHoare(array, pivot + 1, right);
         }
     }
 }

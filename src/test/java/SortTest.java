@@ -13,8 +13,8 @@ import static org.junit.Assert.assertArrayEquals;
 
 public class SortTest {
     private int min = 0;
-    private int max = 1000;
-    private int numberOfElements = 10;
+    private int max = 10;
+    private int numberOfElements = 1000;
 
     private int[] getArray(){
         Random random = new Random();
@@ -49,7 +49,7 @@ public class SortTest {
         Arrays.sort(expected);
 
         // sort using my sort
-        CountingSort.countingSort(actual, max, 0, actual.length - 1);
+        CountingSort.countingSort(actual, max);
 
         // assert the results
         assertArrayEquals(expected, actual);
@@ -117,7 +117,7 @@ public class SortTest {
         Arrays.sort(expected);
 
         // sort using my sort
-        QuickSort.quickSort(actual, 0, actual.length - 1, QuickSort::randomizedLomutoPartition);
+        QuickSort.randomizedQuickSortLomuto(actual, 0, actual.length - 1);
 
         // assert the results
         assertArrayEquals(expected, actual);
@@ -134,7 +134,7 @@ public class SortTest {
         Arrays.sort(expected);
 
         // sort using my sort
-        QuickSort.quickSort(actual, 0, actual.length - 1, QuickSort::lomutoPartition);
+        QuickSort.quickSortLomuto(actual, 0, actual.length - 1);
 
         // assert the results
         assertArrayEquals(expected, actual);
@@ -151,7 +151,7 @@ public class SortTest {
         Arrays.sort(expected);
 
         // sort using my sort
-        QuickSort.quickSort(actual, 0, actual.length - 1, QuickSort::hoarePartition);
+        QuickSort.quickSortHoare(actual, 0, actual.length - 1);
 
         // assert the results
         assertArrayEquals(expected, actual);
