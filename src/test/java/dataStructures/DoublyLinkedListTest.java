@@ -1,7 +1,7 @@
 package dataStructures;
 
 import dsa.dataStructures.list.DoublyLinkedList;
-import dsa.dataStructures.list.List;
+import dsa.dataStructures.list.LinkedList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 class DoublyLinkedListTest {
 
-    private List<Integer> list;
+    private LinkedList<Integer> list;
 
     @BeforeEach
     void setUp() {

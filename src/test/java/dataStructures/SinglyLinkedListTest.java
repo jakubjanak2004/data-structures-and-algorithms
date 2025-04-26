@@ -1,6 +1,6 @@
 package dataStructures;
 
-import dsa.dataStructures.list.List;
+import dsa.dataStructures.list.LinkedList;
 import dsa.dataStructures.list.SinglyLinkedList;
 import org.junit.jupiter.api.*;
 
@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 class SinglyLinkedListTest {
 
-    private List<Integer> list;
+    private LinkedList<Integer> list;
 
     @BeforeEach
     void setUp() {

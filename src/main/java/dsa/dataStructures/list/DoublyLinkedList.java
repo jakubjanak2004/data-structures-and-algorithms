@@ -1,28 +1,6 @@
 package dsa.dataStructures.list;
 
-public class DoublyLinkedList<T> implements List<T> {
-    ListNode<T> head;
-    ListNode<T> tail;
-    ListNode<T> point;
-    int len;
-
-    @Override
-    public int length() {
-        return len;
-    }
-
-    @Override
-    public boolean empty() {
-        return head == null;
-    }
-
-    @Override
-    public T read() {
-        if (point != null) {
-            return point.getValue();
-        }
-        return null;
-    }
+public class DoublyLinkedList<T> extends LinkedList<T> {
 
     @Override
     public void insert(T t) {
