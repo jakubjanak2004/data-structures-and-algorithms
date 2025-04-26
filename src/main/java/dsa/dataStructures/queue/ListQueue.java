@@ -1,6 +1,6 @@
 package dsa.dataStructures.queue;
 
-import dsa.dataStructures.list.ListNode;
+import dsa.dataStructures.linkedList.ListNode;
 
 public class ListQueue<T> implements Queue<T> {
     private ListNode<T> head;

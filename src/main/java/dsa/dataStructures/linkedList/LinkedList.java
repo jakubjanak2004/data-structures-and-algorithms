@@ -1,4 +1,4 @@
-package dsa.dataStructures.list;
+package dsa.dataStructures.linkedList;
 
 public abstract class LinkedList<T> {
     protected ListNode<T> head;

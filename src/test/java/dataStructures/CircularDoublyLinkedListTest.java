@@ -1,6 +1,6 @@
 package dataStructures;
 
-import dsa.dataStructures.list.CircularDoublyLinkedList;
+import dsa.dataStructures.linkedList.CircularDoublyLinkedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
