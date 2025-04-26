@@ -1,8 +1,8 @@
-package dsa.sorting.comparative;
+package dsa.algorithms.sorting.comparative;
 
 import java.util.Random;
 
-import static dsa.Utils.swap;
+import static dsa.algorithms.Utils.swap;
 
 public class QuickSort {
     // random object for randomized algorithms

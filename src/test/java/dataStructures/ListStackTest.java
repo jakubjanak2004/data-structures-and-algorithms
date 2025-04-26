@@ -1,3 +1,5 @@
+package dataStructures;
+
 import dsa.dataStructures.stack.ListStack;
 import org.junit.Test;
 

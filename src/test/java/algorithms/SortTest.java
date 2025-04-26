@@ -1,9 +1,11 @@
-import dsa.sorting.comparative.HeapSort;
-import dsa.sorting.comparative.InsertionSort;
-import dsa.sorting.comparative.MergeSort;
-import dsa.sorting.comparative.QuickSort;
-import dsa.sorting.linear.CountingSort;
-import dsa.sorting.linear.RadixSort;
+package algorithms;
+
+import dsa.algorithms.sorting.comparative.HeapSort;
+import dsa.algorithms.sorting.comparative.InsertionSort;
+import dsa.algorithms.sorting.comparative.MergeSort;
+import dsa.algorithms.sorting.comparative.QuickSort;
+import dsa.algorithms.sorting.linear.CountingSort;
+import dsa.algorithms.sorting.linear.RadixSort;
 import org.junit.Test;
 
 import java.util.Arrays;

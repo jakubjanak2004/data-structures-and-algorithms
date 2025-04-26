@@ -1,4 +1,4 @@
-package dsa.sorting.comparative;
+package dsa.algorithms.sorting.comparative;
 
 public class InsertionSort {
     /**

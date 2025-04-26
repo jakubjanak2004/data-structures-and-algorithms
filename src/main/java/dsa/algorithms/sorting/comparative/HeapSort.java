@@ -1,6 +1,6 @@
-package dsa.sorting.comparative;
+package dsa.algorithms.sorting.comparative;
 
-import static dsa.Utils.swap;
+import static dsa.algorithms.Utils.swap;
 
 public class HeapSort {
     /**

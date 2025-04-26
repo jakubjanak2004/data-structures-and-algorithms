@@ -1,4 +1,4 @@
-package dsa.sorting.linear;
+package dsa.algorithms.sorting.linear;
 
 // todo finish commenting the radix sort
 public class RadixSort {

@@ -1,3 +1,5 @@
+package dataStructures;
+
 import dsa.dataStructures.queue.ArrayQueue;
 import org.junit.Test;
 

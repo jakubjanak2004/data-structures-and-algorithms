@@ -1,4 +1,4 @@
-package dsa.sorting.linear;
+package dsa.algorithms.sorting.linear;
 
 public class CountingSort {
     /**

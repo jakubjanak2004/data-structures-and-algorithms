@@ -1,3 +1,5 @@
+package dataStructures;
+
 import dsa.dataStructures.stack.ArrayStack;
 import org.junit.Test;
 

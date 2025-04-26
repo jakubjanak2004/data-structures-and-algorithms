@@ -1,4 +1,4 @@
-package dsa.matrix;
+package dsa.algorithms.matrix;
 
 public class ClassicMatmul {
     /**

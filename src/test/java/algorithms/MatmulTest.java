@@ -1,9 +1,11 @@
-import dsa.matrix.ClassicMatmul;
-import dsa.matrix.StrassenMatmul;
+package algorithms;
+
+import dsa.algorithms.matrix.ClassicMatmul;
+import dsa.algorithms.matrix.StrassenMatmul;
 import org.junit.Test;
 
-import static dsa.Utils.deepCopy2D;
-import static dsa.matrix.StrassenMatmul.scalarMul;
+import static dsa.algorithms.Utils.deepCopy2D;
+import static dsa.algorithms.matrix.StrassenMatmul.scalarMul;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;

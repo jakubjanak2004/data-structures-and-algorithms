@@ -1,4 +1,4 @@
-package dsa;
+package dsa.algorithms;
 
 public class Utils {
     static public void swap(int[] array, int i1, int i2) {

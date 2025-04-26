@@ -1,6 +1,6 @@
-package dsa.matrix;
+package dsa.algorithms.matrix;
 
-import static dsa.Utils.deepCopy2D;
+import static dsa.algorithms.Utils.deepCopy2D;
 
 public class StrassenMatmul {
     public final static int MINIMAL_LENGTH_FOR_STRASSEN = 1;
