@@ -21,8 +21,8 @@ public class ListQueue<T> implements Queue<T> {
 
     @Override
     public T get() {
-        if (tail != null) {
-            return tail.getValue();
+        if (head != null) {
+            return head.getValue();
         }
         return null;
     }
@@ -34,8 +34,6 @@ public class ListQueue<T> implements Queue<T> {
         } else {
             tail.setNextNode(new ListNode<>(t));
             tail = tail.getNextNode();
-            // todo
-//            tail = tail.getNextNode() = new ListNode<>(t);
         }
     }
 }
