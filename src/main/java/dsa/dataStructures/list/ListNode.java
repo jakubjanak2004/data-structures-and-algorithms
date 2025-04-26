@@ -1,4 +1,4 @@
-package dsa.dataStructures.linkedList;
+package dsa.dataStructures.list;
 
 public class ListNode<T> {
     private T value;

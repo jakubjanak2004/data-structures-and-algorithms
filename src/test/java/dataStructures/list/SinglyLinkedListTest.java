@@ -1,7 +1,7 @@
-package dataStructures;
+package dataStructures.list;
 
-import dsa.dataStructures.linkedList.LinkedList;
-import dsa.dataStructures.linkedList.SinglyLinkedList;
+import dsa.dataStructures.list.LinkedList;
+import dsa.dataStructures.list.SinglyLinkedList;
 import org.junit.jupiter.api.*;
 
 import static org.junit.Assert.*;

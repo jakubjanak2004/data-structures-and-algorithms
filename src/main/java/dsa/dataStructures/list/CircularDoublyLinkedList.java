@@ -1,4 +1,4 @@
-package dsa.dataStructures.linkedList;
+package dsa.dataStructures.list;
 
 public class CircularDoublyLinkedList<T> extends LinkedList<T> {
     ListNode<T> dummyHead = new ListNode<>();

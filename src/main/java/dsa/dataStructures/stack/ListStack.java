@@ -1,6 +1,6 @@
 package dsa.dataStructures.stack;
 
-import dsa.dataStructures.linkedList.ListNode;
+import dsa.dataStructures.list.ListNode;
 
 public class ListStack<T> implements Stack<T> {
     private ListNode<T> topOfStack;

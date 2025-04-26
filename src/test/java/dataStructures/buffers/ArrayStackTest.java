@@ -1,4 +1,4 @@
-package dataStructures;
+package dataStructures.buffers;
 
 import dsa.dataStructures.stack.ArrayStack;
 import org.junit.Test;
