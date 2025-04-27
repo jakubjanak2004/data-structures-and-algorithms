@@ -2,7 +2,7 @@ package dsa.dataStructures.list;
 
 import java.util.Objects;
 
-public abstract class LinkedList<T> implements Iterable<T> {
+public abstract class LinkedList<T> implements List<T>, Iterable<T> {
     protected ListNode<T> head;
     protected ListNode<T> tail;
     protected ListNode<T> point;
@@ -65,16 +65,4 @@ public abstract class LinkedList<T> implements Iterable<T> {
         point = oldPoint;
         return value;
     }
-
-    abstract public void insert(T t);
-
-    abstract public void delete();
-
-    abstract public T first();
-
-    abstract public T last();
-
-    abstract public void next();
-
-    abstract public void prev();
 }

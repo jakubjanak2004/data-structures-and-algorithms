@@ -1,5 +1,6 @@
 package dataStructures.list;
 
+import dsa.dataStructures.list.List;
 import dsa.dataStructures.list.circularLinkedList.CircularDoublyLinkedList;
 import dsa.dataStructures.list.LinkedList;
 import org.junit.jupiter.api.Assertions;
@@ -11,10 +12,10 @@ import java.util.stream.Stream;
 
 import static dataStructures.TestHelpers.getInstantiatedChildrenForClass;
 
-public class LinkedListTest {
+public class ListTest {
 
     public static Stream<Arguments> loadAllLinkedListChildren() {
-        return getInstantiatedChildrenForClass("dsa.dataStructures.list", LinkedList.class);
+        return getInstantiatedChildrenForClass("dsa.dataStructures.list", List.class);
     }
 
     @ParameterizedTest(name = "testEmptyList on: {1}")

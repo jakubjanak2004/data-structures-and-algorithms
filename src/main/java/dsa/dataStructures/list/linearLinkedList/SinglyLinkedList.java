@@ -1,6 +1,5 @@
 package dsa.dataStructures.list.linearLinkedList;
 
-import dsa.dataStructures.list.LinkedList;
 import dsa.dataStructures.list.ListNode;
 
 import java.util.Objects;
@@ -75,6 +74,24 @@ public class SinglyLinkedList<T> extends LinearLinkedList<T> {
         point = point.getNextNode();
     }
 
+    /**
+     * Moves the pointer to the previous node in the list.
+     * <p>
+     * In the case of a {@code SinglyLinkedList}, the time complexity of this operation is {@code O(n)},
+     * because the structure does not store a reference to the previous node. Therefore, to find the previous node,
+     * it is necessary to start from the head of the list and traverse until reaching the node whose {@code next} points
+     * to the current {@code point}.
+     * </p>
+     * <p>
+     * If the {@code point} is currently at the head of the list, calling {@code prev()} will have no effect,
+     * because there is no node before the head.
+     * </p>
+     * <p>
+     * Note: In general, singly linked lists are designed for efficient forward-only traversal.
+     * The {@code prev()} method is an additional convenience, but it is not efficient for frequent backward traversals.
+     * For efficient backward traversal, consider using a doubly linked list.
+     * </p>
+     */
     @Override
     public void prev() {
         ListNode<T> help;
