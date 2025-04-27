@@ -1,6 +1,6 @@
 package dataStructures.table;
 
-import dsa.dataStructures.set.HashSet;
+import dsa.dataStructures.set.hashSet.HashSet;
 import dsa.dataStructures.table.HashTable;
 import dsa.dataStructures.table.Pair;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HashTableTest {
     public static Stream<Arguments> loadAllHashTableChildren() {
-        return getInstantiatedChildrenForClass("dsa.dataStructures.set", dsa.dataStructures.set.HashSet.class);
+        return getInstantiatedChildrenForClass("dsa.dataStructures.set", HashSet.class);
     }
 
     @ParameterizedTest(name = "testPutAndContains with hashSet: {1}")

@@ -1,7 +1,7 @@
-package dsa.dataStructures.set.openAddressingHashSet;
+package dsa.dataStructures.set.hashSet.openAddressingHashSet;
 
-import dsa.dataStructures.set.HashSet;
-import dsa.dataStructures.set.LineEntry;
+import dsa.dataStructures.set.hashSet.HashSet;
+import dsa.dataStructures.set.hashSet.LineEntry;
 
 import java.lang.reflect.Array;
 

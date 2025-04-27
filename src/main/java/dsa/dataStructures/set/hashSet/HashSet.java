@@ -1,4 +1,6 @@
-package dsa.dataStructures.set;
+package dsa.dataStructures.set.hashSet;
+
+import dsa.dataStructures.set.Set;
 
 public abstract class HashSet<T> implements Set<T> {
     public final static double GROW = 0.7;

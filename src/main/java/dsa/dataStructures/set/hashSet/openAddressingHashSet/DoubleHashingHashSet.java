@@ -1,6 +1,6 @@
-package dsa.dataStructures.set.openAddressingHashSet;
+package dsa.dataStructures.set.hashSet.openAddressingHashSet;
 
-import dsa.dataStructures.set.LineEntry;
+import dsa.dataStructures.set.hashSet.LineEntry;
 
 import java.util.Objects;
 

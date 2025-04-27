@@ -1,4 +1,4 @@
-package dsa.dataStructures.set;
+package dsa.dataStructures.set.hashSet;
 
 import dsa.dataStructures.list.LinkedList;
 import dsa.dataStructures.list.linearLinkedList.SinglyLinkedList;

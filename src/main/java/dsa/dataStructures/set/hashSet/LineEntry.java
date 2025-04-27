@@ -1,4 +1,4 @@
-package dsa.dataStructures.set;
+package dsa.dataStructures.set.hashSet;
 
 public class LineEntry<T> {
     private boolean deleted = false;
