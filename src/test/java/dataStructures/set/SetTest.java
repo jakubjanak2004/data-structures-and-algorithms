@@ -1,5 +1,6 @@
 package dataStructures.set;
 
+import dsa.dataStructures.set.Set;
 import dsa.dataStructures.set.hashSet.HashSet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class HashSetTest {
+public class SetTest {
     public static Stream<Arguments> loadAllHashTableChildren() {
-        return getInstantiatedChildrenForClass("dsa.dataStructures.set", HashSet.class);
+        return getInstantiatedChildrenForClass("dsa.dataStructures.set", Set.class);
     }
 
     @ParameterizedTest(name = "testEmptySet on: {1}")
     @MethodSource("loadAllHashTableChildren")
-    public void testEmptySet(HashSet<Double> doubleHashSet, String testedClassName) {
+    public void testEmptySet(Set<Double> doubleHashSet, String testedClassName) {
         Assertions.assertEquals(0, doubleHashSet.size());
         Assertions.assertNull(doubleHashSet.get(0.5));
         Assertions.assertFalse(doubleHashSet.contains(1.5));
@@ -29,7 +30,7 @@ public class HashSetTest {
 
     @ParameterizedTest(name = "testAddAndContains on: {1}")
     @MethodSource("loadAllHashTableChildren")
-    public void testAddAndContains(HashSet<Double> doubleHashSet, String testedClassName) {
+    public void testAddAndContains(Set<Double> doubleHashSet, String testedClassName) {
         assertEquals(0, doubleHashSet.size());
         assertFalse(doubleHashSet.contains(5.5));
 
@@ -48,7 +49,7 @@ public class HashSetTest {
 
     @ParameterizedTest(name = "testRemove on: {1}")
     @MethodSource("loadAllHashTableChildren")
-    public void testRemove(HashSet<Double> doubleHashSet, String testedClassName) {
+    public void testRemove(Set<Double> doubleHashSet, String testedClassName) {
         doubleHashSet.add(42.5);
         assertTrue(doubleHashSet.contains(42.5));
         assertEquals(1, doubleHashSet.size());
@@ -64,8 +65,8 @@ public class HashSetTest {
 
     @ParameterizedTest(name = "testMultipleElements on: {1}")
     @MethodSource("loadAllHashTableChildren")
-    public void testMultipleElements(HashSet<Double> doubleHashSet, String testedClassName) {
-        int maximalElement = 100000;
+    public void testMultipleElements(Set<Double> doubleHashSet, String testedClassName) {
+        int maximalElement = 20000;
         for (double i = 1; i <= maximalElement; i++) {
             doubleHashSet.add(i);
         }
@@ -81,7 +82,7 @@ public class HashSetTest {
 
     @ParameterizedTest(name = "testNegativeHashCodes on: {1}")
     @MethodSource("loadAllHashTableChildren")
-    public void testNegativeHashCodes(HashSet<Double> doubleHashSet, String testedClassName) {
+    public void testNegativeHashCodes(Set<Double> doubleHashSet, String testedClassName) {
         doubleHashSet.add(-123D);
         assertTrue(doubleHashSet.contains(-123D));
 

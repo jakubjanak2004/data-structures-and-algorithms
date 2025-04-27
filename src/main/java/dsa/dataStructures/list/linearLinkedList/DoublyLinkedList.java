@@ -1,15 +1,13 @@
 package dsa.dataStructures.list.linearLinkedList;
 
-import dsa.dataStructures.list.LinkedList;
 import dsa.dataStructures.list.ListNode;
 
 public class DoublyLinkedList<T> extends LinearLinkedList<T> {
 
     @Override
     public void insert(T t) {
-        ListNode<T> help = new ListNode<>();
+        ListNode<T> help = new ListNode<>(t);
         if (point == null) {
-            help.setValue(t);
             if (tail == null) {
                 head = help;
             } else {
@@ -19,7 +17,6 @@ public class DoublyLinkedList<T> extends LinearLinkedList<T> {
             tail = help;
         } else {
             // setting the prev and next node
-            help.setValue(point.getValue());
             help.setNextNode(point.getNextNode());
             point.getNextNode().setPrevNode(help);
             // setting the prev and next node

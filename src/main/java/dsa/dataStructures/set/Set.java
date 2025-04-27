@@ -1,5 +1,12 @@
 package dsa.dataStructures.set;
 
+/**
+ * A Set is a non-linear (associative) container.
+ * The order of elements cannot be guaranteed in general.
+ * For a SortedSet, the order is determined by the mutual comparison of the keys.
+ *
+ * @param <T> the type of elements maintained by set
+ */
 public interface Set<T> {
     int size();
 
