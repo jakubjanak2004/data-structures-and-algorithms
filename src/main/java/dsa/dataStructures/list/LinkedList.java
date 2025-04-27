@@ -2,7 +2,7 @@ package dsa.dataStructures.list;
 
 import java.util.Objects;
 
-public abstract class LinkedList<T> implements List<T>, Iterable<T> {
+public abstract class LinkedList<T> implements List<T> {
     protected ListNode<T> head;
     protected ListNode<T> tail;
     protected ListNode<T> point;

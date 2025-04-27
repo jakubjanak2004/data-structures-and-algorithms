@@ -131,4 +131,19 @@ class HashTableTest {
         assertTrue(table.containsKey("d"));
         assertEquals(3, table.size());
     }
+
+    @ParameterizedTest(name = "testBigInsertions with hashSet: {1}")
+    @MethodSource("loadAllHashTableChildren")
+    void testBigInsertions(HashSet<Pair<Integer, Integer>> hashSet, String insertedHashSetName) {
+        HashTable<Integer, Integer> table = new HashTable<>(hashSet);
+        int maximalElement = 1000000;
+        for (int i = 0; i < maximalElement; i++) {
+            table.put(i, i+1);
+        }
+
+        assertEquals(maximalElement, table.size());
+        for (int i = 0; i < maximalElement; i++) {
+            assertEquals(i+1, table.get(i));
+        }
+    }
 }

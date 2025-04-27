@@ -1,6 +1,6 @@
 package dsa.dataStructures.set;
 
-public abstract class HashSet<T> {
+public abstract class HashSet<T> implements Set<T> {
     public final static double GROW = 0.7;
     public final static double SHRINK = 0.3;
     public static final int INITIAL_TABLE_CAPACITY = 16;

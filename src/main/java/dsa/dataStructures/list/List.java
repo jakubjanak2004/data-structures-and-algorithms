@@ -1,6 +1,6 @@
 package dsa.dataStructures.list;
 
-public interface List<T> {
+public interface List<T> extends Iterable<T>{
     int size();
 
     boolean empty();
