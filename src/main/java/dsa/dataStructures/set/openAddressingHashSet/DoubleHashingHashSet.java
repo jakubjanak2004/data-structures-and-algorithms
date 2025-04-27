@@ -43,6 +43,22 @@ public class DoubleHashingHashSet<T> extends OpenAddressingHashSet<T> {
     }
 
     @Override
+    public void addOrReplace(T element) {
+        int hash1 = hash(element, values.length);
+        int hash2 = hash2(element, values.length);
+        while (values[hash1] != null) {
+            if (Objects.equals(element, values[hash1].getValue())) {
+                values[hash1] = new LineEntry<>(element);
+                return;
+            }
+            hash1 = (hash1 + hash2) % values.length;
+        }
+        values[hash1] = new LineEntry<>(element);
+        numOfUniqueEntries++;
+        super.add(element);
+    }
+
+    @Override
     public boolean contains(T element) {
         int hash1 = hash(element, values.length);
         int hash2 = hash2(element, values.length);

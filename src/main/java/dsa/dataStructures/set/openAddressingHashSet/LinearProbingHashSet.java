@@ -5,8 +5,6 @@ import dsa.dataStructures.set.LineEntry;
 import java.util.Objects;
 
 public class LinearProbingHashSet<T> extends OpenAddressingHashSet<T> {
-
-
     @Override
     public T get(T element) {
         int hash = hash(element, values.length);
@@ -31,9 +29,30 @@ public class LinearProbingHashSet<T> extends OpenAddressingHashSet<T> {
             }
             if (Objects.equals(values[index].getValue(), element)) {
                 if (values[index].isDeleted()) {
-                    values[index] = new LineEntry<>(element);
+                    values[index].setDeleted(false);
                     numOfUniqueEntries++;
                 }
+                break;
+            }
+        }
+        super.add(element);
+    }
+
+    @Override
+    public void addOrReplace(T element) {
+        int hash = hash(element, values.length);
+        for (int i = 0; i < values.length; i++) {
+            int index = (hash + i) % values.length;
+            if (values[index] == null) {
+                values[index] = new LineEntry<>(element);
+                numOfUniqueEntries++;
+                break;
+            }
+            if (Objects.equals(values[index].getValue(), element)) {
+                if (values[index].isDeleted()) {
+                    numOfUniqueEntries++;
+                }
+                values[index] = new LineEntry<>(element);
                 break;
             }
         }

@@ -16,8 +16,7 @@ public abstract class HashSet<T> {
 
     abstract public void add(T element);
 
-    // todo will be used in HashTable to replace old element quickly without the contains check
-//    abstract public void addOrReplace(T element);
+    abstract public void addOrReplace(T element);
 
     abstract public boolean contains(T element);
 

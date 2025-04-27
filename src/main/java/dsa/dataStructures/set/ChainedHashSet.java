@@ -32,6 +32,18 @@ public class ChainedHashSet<T> extends HashSet<T> {
     }
 
     @Override
+    public void addOrReplace(T element) {
+        int index = hash(element, buckets.size());
+        if (!buckets.get(index).contains(element)) {
+            buckets.get(index).insert(element);
+            numOfUniqueEntries++;
+        } else {
+            buckets.get(index).remove(element);
+            buckets.get(index).insert(element);
+        }
+    }
+
+    @Override
     public boolean contains(T element) {
         int index = hash(element, buckets.size());
         return buckets.get(index).contains(element);

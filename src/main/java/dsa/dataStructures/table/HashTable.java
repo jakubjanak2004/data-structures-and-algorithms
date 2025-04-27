@@ -15,10 +15,7 @@ public class HashTable<K, V> {
 
     // insert
     public void put(K key, V value) {
-        if (hashSet.contains(new Pair<>(key, value))) {
-            hashSet.remove(new Pair<>(key, value));
-        }
-        hashSet.add(new Pair<>(key, value));
+        hashSet.addOrReplace(new Pair<>(key, value));
     }
 
     // delete

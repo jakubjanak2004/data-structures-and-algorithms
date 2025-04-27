@@ -1,23 +1,26 @@
 package dataStructures.table;
 
-import dsa.dataStructures.set.openAddressingHashSet.LinearProbingHashSet;
+import dsa.dataStructures.set.HashSet;
 import dsa.dataStructures.table.HashTable;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import dsa.dataStructures.table.Pair;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.stream.Stream;
+
+import static dataStructures.TestHelpers.getInstantiatedChildrenForClass;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HashTableTest {
-
-    private HashTable<String, Integer> table;
-
-    @BeforeEach
-    void setUp() {
-        table = new HashTable<>(new LinearProbingHashSet<>());
+    public static Stream<Arguments> loadAllHashTableChildren() {
+        return getInstantiatedChildrenForClass("dsa.dataStructures.set", dsa.dataStructures.set.HashSet.class);
     }
 
-    @Test
-    void testPutAndContains() {
+    @ParameterizedTest(name = "testPutAndContains with hashSet: {1}")
+    @MethodSource("loadAllHashTableChildren")
+    void testPutAndContains(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+        HashTable<String, Integer> table = new HashTable<>(hashSet);
         assertFalse(table.containsKey("apple"));
         assertEquals(0, table.size());
 
@@ -32,8 +35,10 @@ class HashTableTest {
         assertFalse(table.containsKey("cherry"));
     }
 
-    @Test
-    void testGetExistingKey() {
+    @ParameterizedTest(name = "testGetExistingKey with hashSet: {1}")
+    @MethodSource("loadAllHashTableChildren")
+    void testGetExistingKey(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+        HashTable<String, Integer> table = new HashTable<>(hashSet);
         table.put("dog", 5);
         table.put("cat", 7);
 
@@ -41,16 +46,22 @@ class HashTableTest {
         assertEquals(7, table.get("cat"));
     }
 
-    @Test
-    void testGetNonExistingKey() {
+    @ParameterizedTest(name = "testGetNonExistingKey with hashSet: {1}")
+    @MethodSource("loadAllHashTableChildren")
+    void testGetNonExistingKey(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+        HashTable<String, Integer> table = new HashTable<>(hashSet);
+
         table.put("house", 10);
 
         assertNull(table.get("tree"));
         assertNull(table.get("car"));
     }
 
-    @Test
-    void testOverwriteValue() {
+    @ParameterizedTest(name = "testOverwriteValue with hashSet: {1}")
+    @MethodSource("loadAllHashTableChildren")
+    void testOverwriteValue(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+        HashTable<String, Integer> table = new HashTable<>(hashSet);
+
         table.put("key", 10);
         assertTrue(table.containsKey("key"));
         assertEquals(10, table.get("key"));
@@ -62,8 +73,11 @@ class HashTableTest {
         assertEquals(1, table.size()); // Size must NOT increase
     }
 
-    @Test
-    void testRemoveExistingKey() {
+    @ParameterizedTest(name = "testRemoveExistingKey with hashSet: {1}")
+    @MethodSource("loadAllHashTableChildren")
+    void testRemoveExistingKey(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+        HashTable<String, Integer> table = new HashTable<>(hashSet);
+
         table.put("one", 1);
         table.put("two", 2);
 
@@ -78,8 +92,11 @@ class HashTableTest {
         assertEquals(1, table.size());
     }
 
-    @Test
-    void testRemoveNonExistingKey() {
+    @ParameterizedTest(name = "testRemoveNonExistingKey with hashSet: {1}")
+    @MethodSource("loadAllHashTableChildren")
+    void testRemoveNonExistingKey(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+        HashTable<String, Integer> table = new HashTable<>(hashSet);
+
         table.put("existing", 123);
 
         assertTrue(table.containsKey("existing"));
@@ -91,8 +108,11 @@ class HashTableTest {
         assertEquals(1, table.size());
     }
 
-    @Test
-    void testMultipleOperations() {
+    @ParameterizedTest(name = "testMultipleOperations with hashSet: {1}")
+    @MethodSource("loadAllHashTableChildren")
+    void testMultipleOperations(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+        HashTable<String, Integer> table = new HashTable<>(hashSet);
+
         table.put("a", 1);
         table.put("b", 2);
         table.put("c", 3);
