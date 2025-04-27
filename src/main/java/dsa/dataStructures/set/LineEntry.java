@@ -1,4 +1,4 @@
-package dsa.dataStructures.Set;
+package dsa.dataStructures.set;
 
 public class LineEntry<T> {
     private boolean deleted = false;

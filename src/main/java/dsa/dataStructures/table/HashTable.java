@@ -1,6 +1,6 @@
 package dsa.dataStructures.table;
 
-import dsa.dataStructures.Set.HashSet;
+import dsa.dataStructures.set.HashSet;
 
 public class HashTable<K, V> {
     private final HashSet<Pair<K, V>> hashSet;

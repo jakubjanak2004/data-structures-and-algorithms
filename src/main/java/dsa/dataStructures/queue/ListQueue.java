@@ -2,6 +2,17 @@ package dsa.dataStructures.queue;
 
 import dsa.dataStructures.list.ListNode;
 
+/**
+ * A queue implementation based on a singly linked list.
+ *
+ * <p>The {@code ListQueue} class represents a First-In-First-Out (FIFO) data structure
+ * where elements are inserted at the rear (tail) and removed from the front (head).
+ *
+ * <p>This implementation is simpler and more flexible than array-based queues like
+ * {@code CircularArrayQueue}, as it does not require manual resizing or index wrapping.
+ *
+ * @param <T> the type of elements held in this queue
+ */
 public class ListQueue<T> implements Queue<T> {
     private ListNode<T> head;
     private ListNode<T> tail;

@@ -1,7 +1,6 @@
 package dataStructures.table;
 
-import dsa.dataStructures.Set.ChainedHashSet;
-import dsa.dataStructures.Set.LinearProbingHashSet;
+import dsa.dataStructures.set.openAddressingHashSet.LinearProbingHashSet;
 import dsa.dataStructures.table.HashTable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

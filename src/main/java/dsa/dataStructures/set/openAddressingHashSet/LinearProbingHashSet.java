@@ -1,16 +1,11 @@
-package dsa.dataStructures.Set;
+package dsa.dataStructures.set.openAddressingHashSet;
 
-import java.lang.reflect.Array;
+import dsa.dataStructures.set.LineEntry;
+
 import java.util.Objects;
 
-public class LinearProbingHashSet<T> extends HashSet<T> {
-    private final static double GROW = 0.7;
-    private final static double SHRINK = 0.3;
-    private LineEntry<T>[] values;
+public class LinearProbingHashSet<T> extends OpenAddressingHashSet<T> {
 
-    public LinearProbingHashSet() {
-        values = (LineEntry<T>[]) Array.newInstance(LineEntry.class, HashSet.INITIAL_TABLE_CAPACITY);
-    }
 
     @Override
     public T get(T element) {
@@ -42,22 +37,11 @@ public class LinearProbingHashSet<T> extends HashSet<T> {
                 break;
             }
         }
-        if (((double) numOfUniqueEntries) >= GROW * values.length) {
-            growValuesArray();
-        }
+        super.add(element);
     }
 
-    private void growValuesArray() {
-        LineEntry<T>[] newValues = (LineEntry<T>[]) Array.newInstance(LineEntry.class, values.length * 2);
-        rehash(newValues);
-    }
-
-    private void shrinkValuesArray() {
-        LineEntry<T>[] newValues = (LineEntry<T>[]) Array.newInstance(LineEntry.class, values.length / 2);
-        rehash(newValues);
-    }
-
-    private void rehash(LineEntry<T>[] newValues) {
+    @Override
+    protected void rehash(LineEntry<T>[] newValues) {
         for (LineEntry<T> lineEntry : values) {
             if (lineEntry == null || lineEntry.isDeleted()) continue;
             // loop from hash to hash - 1
@@ -96,8 +80,6 @@ public class LinearProbingHashSet<T> extends HashSet<T> {
                 numOfUniqueEntries--;
             }
         }
-        if (values.length > HashSet.INITIAL_TABLE_CAPACITY && ((double) numOfUniqueEntries) <= SHRINK * values.length) {
-            shrinkValuesArray();
-        }
+        super.remove(element);
     }
 }

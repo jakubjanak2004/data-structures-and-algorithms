@@ -8,7 +8,7 @@ public abstract class LinkedList<T> {
     protected ListNode<T> point;
     protected int len;
 
-    public int length() {
+    public int size() {
         return len;
     }
 

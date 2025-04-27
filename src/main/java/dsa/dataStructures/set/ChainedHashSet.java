@@ -1,10 +1,11 @@
-package dsa.dataStructures.Set;
+package dsa.dataStructures.set;
 
 import dsa.dataStructures.list.LinkedList;
 import dsa.dataStructures.list.SinglyLinkedList;
 
 import java.util.ArrayList;
 
+// todo implement rehash for when the link lists become too big
 public class ChainedHashSet<T> extends HashSet<T> {
     private final ArrayList<LinkedList<T>> buckets;
 

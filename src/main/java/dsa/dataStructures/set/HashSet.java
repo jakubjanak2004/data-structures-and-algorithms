@@ -1,4 +1,4 @@
-package dsa.dataStructures.Set;
+package dsa.dataStructures.set;
 
 public abstract class HashSet<T> {
     public static final int INITIAL_TABLE_CAPACITY = 16;
@@ -15,6 +15,9 @@ public abstract class HashSet<T> {
     abstract public T get(T element);
 
     abstract public void add(T element);
+
+    // todo will be used in HashTable to replace old element quickly without the contains check
+//    abstract public void addOrReplace(T element);
 
     abstract public boolean contains(T element);
 

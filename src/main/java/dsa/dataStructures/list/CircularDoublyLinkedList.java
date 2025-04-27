@@ -4,6 +4,11 @@ public class CircularDoublyLinkedList<T> extends LinkedList<T> {
     ListNode<T> dummyHead = new ListNode<>();
 
     @Override
+    public boolean empty() {
+        return dummyHead.getNextNode() == null || dummyHead.getNextNode() == dummyHead;
+    }
+
+    @Override
     public void insert(T t) {
         ListNode<T> help = new ListNode<>(t);
         if (dummyHead.getNextNode() == null) {
@@ -75,9 +80,5 @@ public class CircularDoublyLinkedList<T> extends LinkedList<T> {
 
     private boolean atEnd() {
         return point == dummyHead.getPrevNode();
-    }
-
-    public ListNode<T> getDummyHead() {
-        return dummyHead;
     }
 }
