@@ -1,6 +1,8 @@
 package dsa.dataStructures.set;
 
 public abstract class HashSet<T> {
+    public final static double GROW = 0.7;
+    public final static double SHRINK = 0.3;
     public static final int INITIAL_TABLE_CAPACITY = 16;
     protected int numOfUniqueEntries;
 
@@ -21,4 +23,8 @@ public abstract class HashSet<T> {
     abstract public boolean contains(T element);
 
     abstract public void remove(T element);
+
+    abstract protected void growValuesArray();
+
+    abstract protected void shrinkValuesArray();
 }

@@ -1,4 +1,10 @@
-package dsa.dataStructures.list;
+package dsa.dataStructures.list.circularLinkedList;
+
+import dsa.dataStructures.list.LinkedList;
+import dsa.dataStructures.list.ListNode;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class CircularDoublyLinkedList<T> extends LinkedList<T> {
     ListNode<T> dummyHead = new ListNode<>();
@@ -80,5 +86,29 @@ public class CircularDoublyLinkedList<T> extends LinkedList<T> {
 
     private boolean atEnd() {
         return point == dummyHead.getPrevNode();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new CircularLinkedListIterator();
+    }
+
+    protected class CircularLinkedListIterator implements Iterator<T> {
+        private ListNode<T> current = dummyHead.getNextNode();
+
+        @Override
+        public boolean hasNext() {
+            return current != dummyHead;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in the list.");
+            }
+            T value = current.getValue();
+            current = current.getNextNode();
+            return value;
+        }
     }
 }

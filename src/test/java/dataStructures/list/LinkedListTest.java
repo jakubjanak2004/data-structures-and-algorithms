@@ -1,6 +1,6 @@
 package dataStructures.list;
 
-import dsa.dataStructures.list.CircularDoublyLinkedList;
+import dsa.dataStructures.list.circularLinkedList.CircularDoublyLinkedList;
 import dsa.dataStructures.list.LinkedList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -154,5 +154,21 @@ public class LinkedListTest {
 
         Assertions.assertEquals(5, (int) linkedList.first(), linkedList.getClass().getSimpleName());
         Assertions.assertEquals(15, (int) linkedList.last(), linkedList.getClass().getSimpleName());
+    }
+
+    @ParameterizedTest(name = "testLinkedListIterator on: {1}")
+    @MethodSource("loadAllLinkedListChildren")
+    void testLinkedListIterator(LinkedList<Integer> linkedList, String testedClassName) {
+        int[] values = {1, 2, 3, 4};
+        for (int value: values) {
+            linkedList.insert(value);
+        }
+
+        int index = 0;
+        for (int value : linkedList) {
+            Assertions.assertEquals(values[index], value);
+            index++;
+        }
+        Assertions.assertEquals(index, values.length);
     }
 }

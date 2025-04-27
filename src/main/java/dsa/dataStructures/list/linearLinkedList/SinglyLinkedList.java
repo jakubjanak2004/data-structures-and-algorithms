@@ -1,6 +1,11 @@
-package dsa.dataStructures.list;
+package dsa.dataStructures.list.linearLinkedList;
 
-public class DoublyLinkedList<T> extends LinkedList<T> {
+import dsa.dataStructures.list.LinkedList;
+import dsa.dataStructures.list.ListNode;
+
+import java.util.Objects;
+
+public class SinglyLinkedList<T> extends LinearLinkedList<T> {
 
     @Override
     public void insert(T t) {
@@ -10,19 +15,14 @@ public class DoublyLinkedList<T> extends LinkedList<T> {
             if (tail == null) {
                 head = help;
             } else {
-                help.setPrevNode(tail);
                 tail.setNextNode(help);
             }
             tail = help;
         } else {
-            // setting the prev and next node
             help.setValue(point.getValue());
             help.setNextNode(point.getNextNode());
-            point.getNextNode().setPrevNode(help);
-            // setting the prev and next node
-            point.setValue(t);
             point.setNextNode(help);
-            help.setPrevNode(point);
+            point.setValue(t);
             point = help;
         }
         len++;
@@ -32,20 +32,22 @@ public class DoublyLinkedList<T> extends LinkedList<T> {
     public void delete() {
         ListNode<T> help;
         if (point != null) {
-            help = point.getNextNode();
-            if (head == point) {
-                head = help;
+            if (Objects.equals(point, head)) {
+                head = tail = point = null;
+            } else if (point.getNextNode() == null) {
+                help = head;
+                while (help.getNextNode() != point)
+                    help = help.getNextNode();
+                help.setNextNode(null);
+                point = null;
+                tail = help;
+            } else {
+                help = point.getNextNode();
+                point.setNextNode(help.getNextNode());
+                point.setValue(help.getValue());
+                if (Objects.equals(help, tail))
+                    tail = point;
             }
-            if (tail == point) {
-                tail = tail.getPrevNode();
-            }
-            if (help != null) {
-                help.setPrevNode(point.getPrevNode());
-            }
-            if (point.getPrevNode() != null) {
-                point.getPrevNode().setNextNode(help);
-            }
-            point = help;
             len--;
         }
     }
@@ -75,11 +77,12 @@ public class DoublyLinkedList<T> extends LinkedList<T> {
 
     @Override
     public void prev() {
+        ListNode<T> help;
         if (point != head) {
-            if (point == null)
-                point = tail;
-            else
-                point = point.getPrevNode();
+            help = head;
+            while (help.getNextNode() != point)
+                help = help.getNextNode();
+            point = help;
         }
     }
 }

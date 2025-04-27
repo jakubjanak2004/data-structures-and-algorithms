@@ -65,7 +65,7 @@ public class HashSetTest {
     @ParameterizedTest(name = "testMultipleElements on: {1}")
     @MethodSource("loadAllHashTableChildren")
     public void testMultipleElements(HashSet<Double> doubleHashSet, String testedClassName) {
-        int maximalElement = 10000;
+        int maximalElement = 100000;
         for (double i = 1; i <= maximalElement; i++) {
             doubleHashSet.add(i);
         }

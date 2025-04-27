@@ -1,13 +1,12 @@
 package dsa.dataStructures.set;
 
 import dsa.dataStructures.list.LinkedList;
-import dsa.dataStructures.list.SinglyLinkedList;
+import dsa.dataStructures.list.linearLinkedList.SinglyLinkedList;
 
 import java.util.ArrayList;
 
-// todo implement rehash for when the link lists become too big
 public class ChainedHashSet<T> extends HashSet<T> {
-    private final ArrayList<LinkedList<T>> buckets;
+    private ArrayList<LinkedList<T>> buckets;
 
     public ChainedHashSet() {
         buckets = new ArrayList<>();
@@ -29,6 +28,9 @@ public class ChainedHashSet<T> extends HashSet<T> {
             buckets.get(index).insert(element);
             numOfUniqueEntries++;
         }
+        if (((double) numOfUniqueEntries) >= GROW * buckets.size()) {
+            growValuesArray();
+        }
     }
 
     @Override
@@ -40,6 +42,9 @@ public class ChainedHashSet<T> extends HashSet<T> {
         } else {
             buckets.get(index).remove(element);
             buckets.get(index).insert(element);
+        }
+        if (((double) numOfUniqueEntries) >= GROW * buckets.size()) {
+            growValuesArray();
         }
     }
 
@@ -56,5 +61,38 @@ public class ChainedHashSet<T> extends HashSet<T> {
             numOfUniqueEntries--;
             buckets.get(index).remove(element);
         }
+        if (buckets.size() > HashSet.INITIAL_TABLE_CAPACITY && ((double) numOfUniqueEntries) <= SHRINK * buckets.size()) {
+            shrinkValuesArray();
+        }
+    }
+
+    @Override
+    protected void growValuesArray() {
+        ArrayList<LinkedList<T>> newBuckets = new ArrayList<>();
+        for (int i = 0; i < buckets.size() * 2; i++) {
+            newBuckets.add(new SinglyLinkedList<>());
+        }
+        rehash(newBuckets);
+    }
+
+    @Override
+    protected void shrinkValuesArray() {
+        ArrayList<LinkedList<T>> newBuckets = new ArrayList<>();
+        for (int i = 0; i < buckets.size() / 2; i++) {
+            newBuckets.add(new SinglyLinkedList<>());
+        }
+        rehash(newBuckets);
+    }
+
+    protected void rehash(ArrayList<LinkedList<T>> newBuckets) {
+        for (LinkedList<T> bucket : buckets) {
+            for (T element : bucket) {
+                int index = hash(element, newBuckets.size());
+                if (!newBuckets.get(index).contains(element)) {
+                    newBuckets.get(index).insert(element);
+                }
+            }
+        }
+        buckets = newBuckets;
     }
 }

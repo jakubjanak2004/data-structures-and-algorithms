@@ -87,7 +87,7 @@ public class DoubleHashingHashSet<T> extends OpenAddressingHashSet<T> {
     }
 
     @Override
-    void rehash(LineEntry<T>[] newValues) {
+    protected void rehash(LineEntry<T>[] newValues) {
         calcContainerPrimeForContainer(newValues);
         // rehash the table
         for (LineEntry<T> lineEntry : values) {
