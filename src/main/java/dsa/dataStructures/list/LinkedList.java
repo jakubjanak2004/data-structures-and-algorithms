@@ -1,6 +1,7 @@
 package dsa.dataStructures.list;
 
-// todo extends from java list
+import java.util.Objects;
+
 public abstract class LinkedList<T> {
     protected ListNode<T> head;
     protected ListNode<T> tail;
@@ -27,7 +28,7 @@ public abstract class LinkedList<T> {
         first();
         boolean wasFound = false;
         while (point != null) {
-            if (t == point.getValue()) {
+            if (Objects.equals(t, point.getValue())) {
                 wasFound = true;
                 break;
             }
@@ -41,13 +42,28 @@ public abstract class LinkedList<T> {
         ListNode<T> oldPoint = point;
         first();
         while (point != null) {
-            if (t == point.getValue()) {
+            if (Objects.equals(t, point.getValue())) {
                 delete();
                 break;
             }
             next();
         }
         point = oldPoint;
+    }
+
+    public T get(T t) {
+        T value = null;
+        ListNode<T> oldPoint = point;
+        first();
+        while (point != null) {
+            if (Objects.equals(t, point.getValue())) {
+                value = point.getValue();
+                break;
+            }
+            next();
+        }
+        point = oldPoint;
+        return value;
     }
 
     abstract public void insert(T t);

@@ -6,7 +6,6 @@ public class ListNode<T> {
     private ListNode<T> prevNode;
 
     public ListNode() {
-
     }
 
     public ListNode(T value) {
@@ -46,5 +45,10 @@ public class ListNode<T> {
 
     public void setPrevNode(ListNode<T> prevNode) {
         this.prevNode = prevNode;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ListNode && ((ListNode<?>) obj).value.equals(value);
     }
 }

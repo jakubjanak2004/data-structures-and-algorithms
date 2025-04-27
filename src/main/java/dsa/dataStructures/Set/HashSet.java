@@ -2,14 +2,21 @@ package dsa.dataStructures.Set;
 
 public abstract class HashSet<T> {
     public static final int INITIAL_TABLE_CAPACITY = 16;
+    protected int numOfUniqueEntries;
 
     protected int hash(T element, int containerSize) {
         return Math.abs(element.hashCode()) % containerSize;
     }
 
-    abstract protected void add(T element);
+    public final int size() {
+        return numOfUniqueEntries;
+    }
 
-    abstract protected boolean contains(T element);
+    abstract public T get(T element);
 
-    abstract protected void remove(T element);
+    abstract public void add(T element);
+
+    abstract public boolean contains(T element);
+
+    abstract public void remove(T element);
 }

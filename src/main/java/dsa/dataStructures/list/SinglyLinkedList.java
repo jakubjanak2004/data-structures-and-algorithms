@@ -1,5 +1,7 @@
 package dsa.dataStructures.list;
 
+import java.util.Objects;
+
 public class SinglyLinkedList<T> extends LinkedList<T> {
 
     @Override
@@ -27,7 +29,7 @@ public class SinglyLinkedList<T> extends LinkedList<T> {
     public void delete() {
         ListNode<T> help;
         if (point != null) {
-            if (point == head) {
+            if (Objects.equals(point, head)) {
                 head = tail = point = null;
             } else if (point.getNextNode() == null) {
                 help = head;
@@ -40,7 +42,7 @@ public class SinglyLinkedList<T> extends LinkedList<T> {
                 help = point.getNextNode();
                 point.setNextNode(help.getNextNode());
                 point.setValue(help.getValue());
-                if (help == tail)
+                if (Objects.equals(help, tail))
                     tail = point;
             }
             len--;

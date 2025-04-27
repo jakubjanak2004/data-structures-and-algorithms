@@ -5,7 +5,7 @@ import dsa.dataStructures.list.SinglyLinkedList;
 
 import java.util.ArrayList;
 
-public class ChainedHashSet<T> extends HashSet<T>{
+public class ChainedHashSet<T> extends HashSet<T> {
     private final ArrayList<LinkedList<T>> buckets;
 
     public ChainedHashSet() {
@@ -16,10 +16,17 @@ public class ChainedHashSet<T> extends HashSet<T>{
     }
 
     @Override
+    public T get(T element) {
+        int index = hash(element, buckets.size());
+        return buckets.get(index).get(element);
+    }
+
+    @Override
     public void add(T element) {
         int index = hash(element, buckets.size());
         if (!buckets.get(index).contains(element)) {
             buckets.get(index).insert(element);
+            numOfUniqueEntries++;
         }
     }
 
@@ -32,6 +39,9 @@ public class ChainedHashSet<T> extends HashSet<T>{
     @Override
     public void remove(T element) {
         int index = hash(element, buckets.size());
-        buckets.get(index).remove(element);
+        if (buckets.get(index).contains(element)) {
+            numOfUniqueEntries--;
+            buckets.get(index).remove(element);
+        }
     }
 }

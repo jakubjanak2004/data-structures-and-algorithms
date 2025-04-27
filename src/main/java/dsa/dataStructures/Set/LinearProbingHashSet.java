@@ -1,15 +1,27 @@
 package dsa.dataStructures.Set;
 
 import java.lang.reflect.Array;
+import java.util.Objects;
 
 public class LinearProbingHashSet<T> extends HashSet<T> {
     private final static double GROW = 0.7;
     private final static double SHRINK = 0.3;
     private LineEntry<T>[] values;
-    private int numOfEntries;
 
     public LinearProbingHashSet() {
         values = (LineEntry<T>[]) Array.newInstance(LineEntry.class, HashSet.INITIAL_TABLE_CAPACITY);
+    }
+
+    @Override
+    public T get(T element) {
+        int hash = hash(element, values.length);
+        for (int i = 0; i < values.length; i++) {
+            int index = (hash + i) % values.length;
+            if (values[index] == null) return null;
+            if (values[index].isDeleted()) continue;
+            if (Objects.equals(values[index].getValue(), element)) return values[index].getValue();
+        }
+        return null;
     }
 
     @Override
@@ -19,18 +31,18 @@ public class LinearProbingHashSet<T> extends HashSet<T> {
             int index = (hash + i) % values.length;
             if (values[index] == null) {
                 values[index] = new LineEntry<>(element);
-                numOfEntries++;
+                numOfUniqueEntries++;
                 break;
             }
-            if (values[index].getValue() == element) {
+            if (Objects.equals(values[index].getValue(), element)) {
                 if (values[index].isDeleted()) {
-                    values[index].setDeleted(false);
-                    numOfEntries++;
+                    values[index] = new LineEntry<>(element);
+                    numOfUniqueEntries++;
                 }
                 break;
             }
         }
-        if (((double) numOfEntries) >= GROW * values.length) {
+        if (((double) numOfUniqueEntries) >= GROW * values.length) {
             growValuesArray();
         }
     }
@@ -67,7 +79,7 @@ public class LinearProbingHashSet<T> extends HashSet<T> {
             int index = (hash + i) % values.length;
             if (values[index] == null) return false;
             if (values[index].isDeleted()) continue;
-            if (values[index].getValue() == element) return true;
+            if (Objects.equals(values[index].getValue(), element)) return true;
         }
         return false;
     }
@@ -79,12 +91,12 @@ public class LinearProbingHashSet<T> extends HashSet<T> {
             int index = (hash + i) % values.length;
             if (values[index] == null) return;
             if (values[index].isDeleted()) continue;
-            if (values[index].getValue() == element) {
+            if (Objects.equals(values[index].getValue(), element)) {
                 values[index].setDeleted(true);
-                numOfEntries--;
+                numOfUniqueEntries--;
             }
         }
-        if (values.length > HashSet.INITIAL_TABLE_CAPACITY && ((double) numOfEntries) <= SHRINK * values.length) {
+        if (values.length > HashSet.INITIAL_TABLE_CAPACITY && ((double) numOfUniqueEntries) <= SHRINK * values.length) {
             shrinkValuesArray();
         }
     }
