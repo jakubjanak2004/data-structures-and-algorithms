@@ -6,6 +6,7 @@ import dsa.dataStructures.list.linearLinkedList.SinglyLinkedList;
 import java.util.Comparator;
 import java.util.Objects;
 
+// todo optimisation can be done, instead of looping from beginning loop from where the linked lists point is, therefore on average will have to make less moves
 public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
     private final LinkedList<T> sortedLinkedList = new SinglyLinkedList<>();
 
