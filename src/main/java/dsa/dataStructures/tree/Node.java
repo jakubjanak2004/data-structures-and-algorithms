@@ -25,6 +25,8 @@ public class Node<T extends Comparable<T>> {
 
     public void setLeft(Node<T> left) {
         this.left = left;
+        if (left == null) return;
+        left.setParent(this);
     }
 
     public Node<T> getRight() {
@@ -33,6 +35,8 @@ public class Node<T extends Comparable<T>> {
 
     public void setRight(Node<T> right) {
         this.right = right;
+        if (right == null) return;
+        right.setParent(this);
     }
 
     public T getValue() {

@@ -19,6 +19,8 @@ import dsa.dataStructures.tree.Node;
  * </table>
  * <p>
  * This implementation assumes that elements stored in the tree are {@link Comparable} so they can be ordered.
+ * <p>
+ * {@link AVLTree} is usually little faster for searches than {@link RedBlackTree}, that is usually faster for inserts and deletes.
  *
  * @param <T> the type of elements stored in the tree; must be comparable to itself
  */
