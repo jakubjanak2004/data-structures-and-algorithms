@@ -19,7 +19,11 @@ public class SinglyLinkedList<T> extends LinearLinkedList<T> {
             tail = help;
         } else {
             help.setValue(point.getValue());
-            help.setNextNode(point.getNextNode());
+            if (point.getNextNode() == null) {
+                tail = help;
+            } else {
+                help.setNextNode(point.getNextNode());
+            }
             point.setNextNode(help);
             point.setValue(t);
             point = help;

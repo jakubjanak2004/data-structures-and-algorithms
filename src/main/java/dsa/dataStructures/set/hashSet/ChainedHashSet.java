@@ -2,8 +2,10 @@ package dsa.dataStructures.set.hashSet;
 
 import dsa.dataStructures.list.LinkedList;
 import dsa.dataStructures.list.linearLinkedList.SinglyLinkedList;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ChainedHashSet<T> extends HashSet<T> {
     private ArrayList<LinkedList<T>> buckets;
@@ -94,5 +96,11 @@ public class ChainedHashSet<T> extends HashSet<T> {
             }
         }
         buckets = newBuckets;
+    }
+
+    @NotNull
+    @Override
+    public Iterator<T> iterator() {
+        return null;
     }
 }

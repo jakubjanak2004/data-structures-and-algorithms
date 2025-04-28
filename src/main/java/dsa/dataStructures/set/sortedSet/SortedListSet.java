@@ -2,13 +2,14 @@ package dsa.dataStructures.set.sortedSet;
 
 import dsa.dataStructures.list.LinkedList;
 import dsa.dataStructures.list.linearLinkedList.SinglyLinkedList;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.Iterator;
 
-// todo the implementation does not work, not inserting in sorted order
 // todo make faster
 // todo optimisation can be done, instead of looping from beginning loop from where the linked lists point is, therefore on average will have to make less moves
+// todo interpolation can be implementing, determine where the element is based on the maximum and minimum
+// todo use faster search algo, interpolation/binary search
 public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
     private final LinkedList<T> sortedLinkedList = new SinglyLinkedList<>();
 
@@ -27,10 +28,9 @@ public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
         sortedLinkedList.first();
         while (sortedLinkedList.read() != null) {
             T redElement = sortedLinkedList.read();
-            int comparison = Objects.compare(element, redElement, Comparator.naturalOrder());
-            if (Objects.equals(element, redElement)) return;
+            int comparison = element.compareTo(redElement);
+            if (comparison == 0) return;
             if (comparison < 0) {
-                sortedLinkedList.prev();
                 break;
             }
             sortedLinkedList.next();
@@ -43,14 +43,13 @@ public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
         sortedLinkedList.first();
         while (sortedLinkedList.read() != null) {
             T redElement = sortedLinkedList.read();
-            int comparison = Objects.compare(element, redElement, Comparator.naturalOrder());
-            if (Objects.equals(element, redElement)) {
+            int comparison = element.compareTo(redElement);
+            if (comparison == 0) {
                 sortedLinkedList.delete();
                 sortedLinkedList.insert(element);
                 return;
             }
             if (comparison < 0) {
-                sortedLinkedList.prev();
                 break;
             }
             sortedLinkedList.next();
@@ -63,9 +62,9 @@ public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
     public boolean contains(T element) {
         sortedLinkedList.first();
         while (sortedLinkedList.read() != null) {
-            int comparison = Objects.compare(element, sortedLinkedList.read(), Comparator.naturalOrder());
+            int comparison = element.compareTo(sortedLinkedList.read());
             if (comparison < 0) return false;
-            if (Objects.equals(element, sortedLinkedList.read())) return true;
+            if (comparison == 0) return true;
             sortedLinkedList.next();
         }
         return false;
@@ -75,13 +74,29 @@ public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
     public void remove(T element) {
         sortedLinkedList.first();
         while (sortedLinkedList.read() != null) {
-            int comparison = Objects.compare(element, sortedLinkedList.read(), Comparator.naturalOrder());
+            int comparison = element.compareTo(sortedLinkedList.read());
             if (comparison < 0) return;
-            if (Objects.equals(element, sortedLinkedList.read())) {
+            if (comparison == 0) {
                 sortedLinkedList.delete();
                 return;
             }
             sortedLinkedList.next();
         }
+    }
+
+    @Override
+    public T min() {
+        return null;
+    }
+
+    @Override
+    public T max() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public Iterator<T> iterator() {
+        return null;
     }
 }

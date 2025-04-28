@@ -180,4 +180,67 @@ public class ListTest {
         }
         Assertions.assertEquals(index, values.length);
     }
+
+    @ParameterizedTest(name = "addElementAtBeginning on: {1}")
+    @MethodSource("loadAllLinkedListChildren")
+    void addElementAtBeginning(List<Integer> linkedList, String testedClassName) {
+        linkedList.insert(1);
+        linkedList.insert(2);
+        linkedList.insert(3);
+
+        linkedList.first();
+        linkedList.insert(0);
+
+        linkedList.first();
+        Assertions.assertEquals(0, linkedList.read());
+        linkedList.next();
+        Assertions.assertEquals(1, linkedList.read());
+        linkedList.next();
+        Assertions.assertEquals(2, linkedList.read());
+        linkedList.next();
+        Assertions.assertEquals(3, linkedList.read());
+    }
+
+    @ParameterizedTest(name = "addElementInMiddle on: {1}")
+    @MethodSource("loadAllLinkedListChildren")
+    void addElementInMiddle(List<Integer> linkedList, String testedClassName) {
+        linkedList.insert(1);
+        linkedList.insert(2);
+        linkedList.insert(3);
+
+        linkedList.first();
+        linkedList.next();
+        linkedList.next();
+        linkedList.insert(0);
+
+        linkedList.first();
+        Assertions.assertEquals(1, linkedList.read());
+        linkedList.next();
+        Assertions.assertEquals(2, linkedList.read());
+        linkedList.next();
+        Assertions.assertEquals(0, linkedList.read());
+        linkedList.next();
+        Assertions.assertEquals(3, linkedList.read());
+    }
+
+    @ParameterizedTest(name = "addElementAtEnd on: {1}")
+    @MethodSource("loadAllLinkedListChildren")
+    void addElementAtEnd(List<Integer> linkedList, String testedClassName) {
+        linkedList.insert(1);
+        linkedList.insert(2);
+        linkedList.insert(3);
+
+        linkedList.last();
+        linkedList.next();
+        linkedList.insert(0);
+
+        linkedList.first();
+        Assertions.assertEquals(1, linkedList.read());
+        linkedList.next();
+        Assertions.assertEquals(2, linkedList.read());
+        linkedList.next();
+        Assertions.assertEquals(3, linkedList.read());
+        linkedList.next();
+        Assertions.assertEquals(0, linkedList.read());
+    }
 }

@@ -1,12 +1,21 @@
-package dsa.dataStructures.set.sortedSet.treeSet;
+package dsa.dataStructures.tree;
 
 public class Node<T extends Comparable<T>> {
+    private Node<T> parent;
     private Node<T> left;
     private Node<T> right;
     private T value;
 
     public Node(T value) {
         this.value = value;
+    }
+
+    public Node<T> getParent() {
+        return parent;
+    }
+
+    public void setParent(Node<T> parent) {
+        this.parent = parent;
     }
 
     public Node<T> getLeft() {

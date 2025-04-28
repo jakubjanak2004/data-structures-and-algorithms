@@ -4,12 +4,17 @@ import dsa.dataStructures.set.hashSet.HashSet;
 import dsa.dataStructures.set.hashSet.LineEntry;
 
 import java.lang.reflect.Array;
+import java.util.Iterator;
 
 public abstract class OpenAddressingHashSet<T> extends HashSet<T> {
     protected LineEntry<T>[] values;
 
     public OpenAddressingHashSet() {
         values = (LineEntry<T>[]) Array.newInstance(LineEntry.class, HashSet.INITIAL_TABLE_CAPACITY);
+    }
+
+    public OpenAddressingHashSet(int initialCapacity) {
+        values = (LineEntry<T>[]) Array.newInstance(LineEntry.class, initialCapacity);
     }
 
     @Override
@@ -37,5 +42,10 @@ public abstract class OpenAddressingHashSet<T> extends HashSet<T> {
         if (values.length > HashSet.INITIAL_TABLE_CAPACITY && ((double) numOfUniqueEntries) <= SHRINK * values.length) {
             shrinkValuesArray();
         }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return null;
     }
 }

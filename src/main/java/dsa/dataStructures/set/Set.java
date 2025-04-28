@@ -7,7 +7,7 @@ package dsa.dataStructures.set;
  *
  * @param <T> the type of elements maintained by set
  */
-public interface Set<T> {
+public interface Set<T> extends Iterable<T> {
     int size();
 
     T get(T element);
