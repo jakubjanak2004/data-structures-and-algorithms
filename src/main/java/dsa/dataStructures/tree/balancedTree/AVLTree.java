@@ -6,21 +6,23 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T>{
     @Override
     Node<T> leftRotation(Node<T> subtreeRoot) {
         if (subtreeRoot == null) return null;
-        Node<T> p1 = subtreeRoot.getRight();
-        if (p1 == null) return subtreeRoot;
-        subtreeRoot.setRight(p1.getLeft());
-        p1.setLeft(subtreeRoot);
-        return p1;
+        Node<T> rightChild = subtreeRoot.getRight();
+        if (rightChild == null) return subtreeRoot;
+
+        subtreeRoot.setRight(rightChild.getLeft());
+        rightChild.setLeft(subtreeRoot);
+        return rightChild;
     }
 
     @Override
     Node<T> rightRotation(Node<T> subtreeRoot) {
         if (subtreeRoot == null) return null;
-        Node<T> p1 = subtreeRoot.getLeft();
-        if (p1 == null) return subtreeRoot;
-        subtreeRoot.setLeft(p1.getRight());
-        p1.setRight(subtreeRoot);
-        return p1;
+        Node<T> leftChild = subtreeRoot.getLeft();
+        if (leftChild == null) return subtreeRoot;
+
+        subtreeRoot.setLeft(leftChild.getRight());
+        leftChild.setRight(subtreeRoot);
+        return leftChild;
     }
 
     @Override
@@ -41,7 +43,6 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T>{
     public void add(T element) {
         root = addRecursive(root, element);
     }
-
 
     protected Node<T> addRecursive(Node<T> node, T element) {
         if (node == null) {
