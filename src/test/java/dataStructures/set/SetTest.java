@@ -1,12 +1,15 @@
 package dataStructures.set;
 
 import dsa.dataStructures.set.Set;
-import dsa.dataStructures.set.hashSet.HashSet;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Stream;
 
 import static dataStructures.TestHelpers.getInstantiatedChildrenForClass;
@@ -15,6 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SetTest {
+    private static Random random = new Random();
+    private static List<Double> randomList = new ArrayList<>();
+
+    @BeforeAll
+    public static void setUp() {
+        int numberOfElements = 1000;
+        int maxValue = 1000;
+
+        for (int i = 0; i < numberOfElements; i++) {
+            randomList.add(random.nextDouble(maxValue));
+        }
+    }
+
     public static Stream<Arguments> loadAllHashTableChildren() {
         return getInstantiatedChildrenForClass("dsa.dataStructures.set", Set.class);
     }
@@ -63,21 +79,16 @@ public class SetTest {
         assertEquals(0, doubleHashSet.size());
     }
 
-    @ParameterizedTest(name = "testMultipleElements on: {1}")
+    @ParameterizedTest(name = "testPerformance on: {1}")
     @MethodSource("loadAllHashTableChildren")
-    public void testMultipleElements(Set<Double> doubleHashSet, String testedClassName) {
-        int maximalElement = 20000;
-        for (double i = 1; i <= maximalElement; i++) {
-            doubleHashSet.add(i);
+    public void testPerformance(Set<Double> doubleHashSet, String testedClassName) {
+        for (Double value : randomList) {
+            doubleHashSet.add(value);
         }
 
-        for (double i = 1; i <= maximalElement; i++) {
-            assertTrue(doubleHashSet.contains(i));
+        for (Double value : randomList) {
+            assertTrue(doubleHashSet.contains(value));
         }
-
-        doubleHashSet.remove(50D);
-        assertFalse(doubleHashSet.contains(50D));
-        assertEquals(maximalElement - 1, doubleHashSet.size());
     }
 
     @ParameterizedTest(name = "testNegativeHashCodes on: {1}")

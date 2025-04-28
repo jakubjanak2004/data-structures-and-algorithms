@@ -6,6 +6,8 @@ import dsa.dataStructures.list.linearLinkedList.SinglyLinkedList;
 import java.util.Comparator;
 import java.util.Objects;
 
+// todo the implementation does not work, not inserting in sorted order
+// todo make faster
 // todo optimisation can be done, instead of looping from beginning loop from where the linked lists point is, therefore on average will have to make less moves
 public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
     private final LinkedList<T> sortedLinkedList = new SinglyLinkedList<>();
