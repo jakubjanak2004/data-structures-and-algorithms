@@ -116,9 +116,9 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
 
     @Override
     protected Node<T> removeRecursive(Node<T> node, T element) {
-        node = super.removeRecursive(node, element);
-        if (node == null) return null;
-        return balanceGraph(node);
+        Node<T> returnedNode = super.removeRecursive(node, element);
+        if (returnedNode == null) return null;
+        return balanceGraph(returnedNode);
     }
 
     private int balance(Node<T> node) {
@@ -148,17 +148,23 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
 
         int balance = balance(node);
 
+        // Left-... case
         if (balance >= 2) {
             if (balance(node.getLeft()) < 0) {
+                // Left-Right case
                 node = leftRightRotation(node);
             } else {
+                // Left-Left case
                 node = rightRotation(node);
             }
         }
+        // Right-... case
         if (balance <= -2) {
             if (balance(node.getRight()) > 0) {
+                // Right-Left case
                 node = rightLeftRotation(node);
             } else {
+                // Right-Right case
                 node = leftRotation(node);
             }
         }

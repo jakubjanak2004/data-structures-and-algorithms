@@ -3,6 +3,7 @@ package dsa.dataStructures.tree;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public abstract class BSTree<T extends Comparable<T>> implements Tree<T> {
     protected Node<T> root;
@@ -113,6 +114,25 @@ public abstract class BSTree<T extends Comparable<T>> implements Tree<T> {
     @NotNull
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new BSTreeIterator();
+    }
+
+    private class BSTreeIterator implements Iterator<T> {
+        Node<T> current = root;
+
+        @Override
+        public boolean hasNext() {
+            return current != treeMax(root);
+        }
+
+        @Override
+        public T next() {
+            if (current == null) {
+                throw new NoSuchElementException("No next element");
+            }
+            T nextNode = current.getValue();
+            current = treeSuccessor(current);
+            return nextNode;
+        }
     }
 }
