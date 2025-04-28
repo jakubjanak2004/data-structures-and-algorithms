@@ -2,7 +2,6 @@ package dsa.dataStructures.tree.balancedTree;
 
 import dsa.dataStructures.tree.BSTree;
 import dsa.dataStructures.tree.Node;
-import dsa.dataStructures.tree.Tree;
 
 public abstract class BalancedTree<T extends Comparable<T>> extends BSTree<T> {
     abstract Node<T> leftRotation(Node<T> subtreeNode);

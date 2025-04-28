@@ -5,6 +5,7 @@ public class Node<T extends Comparable<T>> {
     private Node<T> left;
     private Node<T> right;
     private T value;
+    private int height;
 
     public Node(T value) {
         this.value = value;
@@ -40,5 +41,13 @@ public class Node<T extends Comparable<T>> {
 
     public void setValue(T value) {
         this.value = value;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }
