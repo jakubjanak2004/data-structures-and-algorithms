@@ -14,18 +14,27 @@ import java.util.Random;
 import static org.junit.Assert.assertArrayEquals;
 
 public class SortTest {
-    private int min = 0;
-    private int max = 10;
-    private int numberOfElements = 1000;
+    private static int min = 0;
+    private static int max = 10;
+    private static int numberOfElements = 1000;
 
-    private int[] getArray(){
+    private static int[] getIntArray(){
         Random random = new Random();
         return random.ints(numberOfElements, min, max+1).toArray();
     }
 
+    public static Integer[] getArray() {
+        int[] array = getIntArray();
+        Integer[] result = new Integer[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i]; // auto-boxing
+        }
+        return result;
+    }
+
     @Test
     public void testRadix() {
-        int[] original = getArray();
+        int[] original = getIntArray();
 
         int[] expected = original.clone();
         int[] actual = original.clone();
@@ -42,7 +51,7 @@ public class SortTest {
 
     @Test
     public void testCounting() {
-        int[] original = getArray();
+        int[] original = getIntArray();
 
         int[] expected = original.clone();
         int[] actual = original.clone();
@@ -59,10 +68,10 @@ public class SortTest {
 
     @Test
     public void testInsertion() {
-        int[] original = getArray();
+        Integer[] original = getArray();
 
-        int[] expected = original.clone();
-        int[] actual = original.clone();
+        Integer[] expected = original.clone();
+        Integer[] actual = original.clone();
 
         // sort using native sorting
         Arrays.sort(expected);
@@ -76,10 +85,10 @@ public class SortTest {
 
     @Test
     public void testMerge() {
-        int[] original = getArray();
+        Integer[] original = getArray();
 
-        int[] expected = original.clone();
-        int[] actual = original.clone();
+        Integer[] expected = original.clone();
+        Integer[] actual = original.clone();
 
         // sort using native sorting
         Arrays.sort(expected);
@@ -93,10 +102,10 @@ public class SortTest {
 
     @Test
     public void testHeap() {
-        int[] original = getArray();
+        Integer[] original = getArray();
 
-        int[] expected = original.clone();
-        int[] actual = original.clone();
+        Integer[] expected = original.clone();
+        Integer[] actual = original.clone();
 
         // sort using native sorting
         Arrays.sort(expected);
@@ -110,10 +119,10 @@ public class SortTest {
 
     @Test
     public void testRandomizedQuickWithLomuto() {
-        int[] original = getArray();
+        Integer[] original = getArray();
 
-        int[] expected = original.clone();
-        int[] actual = original.clone();
+        Integer[] expected = original.clone();
+        Integer[] actual = original.clone();
 
         // sort using native sorting
         Arrays.sort(expected);
@@ -127,10 +136,10 @@ public class SortTest {
 
     @Test
     public void testQuickWithLomuto() {
-        int[] original = getArray();
+        Integer[] original = getArray();
 
-        int[] expected = original.clone();
-        int[] actual = original.clone();
+        Integer[] expected = original.clone();
+        Integer[] actual = original.clone();
 
         // sort using native sorting
         Arrays.sort(expected);
@@ -144,10 +153,10 @@ public class SortTest {
 
     @Test
     public void testQuickWithHoare() {
-        int[] original = getArray();
+        Integer[] original = getArray();
 
-        int[] expected = original.clone();
-        int[] actual = original.clone();
+        Integer[] expected = original.clone();
+        Integer[] actual = original.clone();
 
         // sort using native sorting
         Arrays.sort(expected);

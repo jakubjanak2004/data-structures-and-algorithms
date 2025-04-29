@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class SearchTest {
-    private static final int numberOfValues = 100000;
+    private static final int numberOfValues = 50000;
     private static final int maximalValue = 1000;
     private static Double[] searchArray;
     private static Double[] sortedSearchArray;

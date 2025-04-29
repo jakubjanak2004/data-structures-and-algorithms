@@ -1,5 +1,6 @@
 package dsa.algorithms.sorting.comparative;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class MergeSort {
@@ -12,9 +13,10 @@ public class MergeSort {
      * @param right array to be combined
      * @return sorted array containing elements of left and right arrays
      */
-    static int[] merge(int[] left, int[] right) {
+    static <T extends Comparable<T>> T[] merge(T[] left, T[] right) {
         // prepare result array
-        int[] result = new int[left.length + right.length];
+        @SuppressWarnings("unchecked")
+        T[] result = (T[]) Array.newInstance(left.getClass().getComponentType(), left.length + right.length);
 
         // prepare variables for iteration i(left array iteration) and j(right array iteration)
         int i = 0, j = 0;
@@ -22,7 +24,7 @@ public class MergeSort {
         // iterate through arrays left and right picking the smallest of the two(merging nto sorted array)
         while (i < left.length && j < right.length) {
             // if the iterated element of the left array is smaller than iterated element of the right array
-            if (left[i] < right[j]) {
+            if (left[i].compareTo(right[j]) < 0) {
                 // append iterated element of the left array to the result
                 result[i + j] = left[i];
                 // increment i
@@ -57,7 +59,7 @@ public class MergeSort {
      * @param array input array sorted in place
      * @return sorted array of integers
      */
-    public static int[] mergeSort(int[] array) {
+    public static <T extends Comparable<T>> T[] mergeSort(T[] array) {
         // base case: if array length is one just return the array
         if (array.length <= 1) {
             return array;
@@ -65,12 +67,12 @@ public class MergeSort {
 
         // split the array [a1, a2, ..., an] by mid: floor(n / 2) into left: [a1, ..., a(mid - 1)] and right: [a(mid), ..., an]
         int mid = array.length / 2;
-        int[] left = Arrays.copyOfRange(array, 0, mid);
-        int[] right = Arrays.copyOfRange(array, mid, array.length);
+        T[] left = Arrays.copyOfRange(array, 0, mid);
+        T[] right = Arrays.copyOfRange(array, mid, array.length);
 
         // call recursively merge sort on left and right arrays
-        int[] sortedLeft = mergeSort(left);
-        int[] sortedRight = mergeSort(right);
+        T[] sortedLeft = mergeSort(left);
+        T[] sortedRight = mergeSort(right);
 
         // return merged(sorted) arrays left and right
         return merge(sortedLeft, sortedRight);

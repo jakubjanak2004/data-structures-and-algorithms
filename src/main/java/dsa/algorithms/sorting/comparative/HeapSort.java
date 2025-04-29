@@ -48,9 +48,9 @@ public class HeapSort {
      *
      * @param array the array representing the heap
      * @param start the index of the root of the subtree
-     * @param end the last index of the valid heap segment within the array
+     * @param end   the last index of the valid heap segment within the array
      */
-    static void maxHeapify(int[] array, int start, int end) {
+    static <T extends Comparable<T>> void maxHeapify(T[] array, int start, int end) {
         // setting left, right index variables
         int l = left(start);
         int r = right(start);
@@ -59,11 +59,11 @@ public class HeapSort {
 
         // determining the largest of the i, left(start) and right(start)
         // left(start) is bigger than array[start]
-        if (l <= end && array[l] > array[start]) {
+        if (l <= end && array[l].compareTo(array[start]) > 0) {
             largest = l;
         }
         // right(start) is bigger than array[start]
-        if (r <= end && array[r] > array[largest]) {
+        if (r <= end && array[r].compareTo(array[largest]) > 0) {
             largest = r;
         }
         // if start isn't the biggest of the tree we swap it with the largest
@@ -81,7 +81,7 @@ public class HeapSort {
      *
      * @param array elements are swapped to ensure max-heap property
      */
-    static void buildMaxHeap(int[] array) {
+    static <T extends Comparable<T>> void buildMaxHeap(T[] array) {
         // set n to the length of the given array
         int n = array.length;
 
@@ -100,7 +100,7 @@ public class HeapSort {
      *
      * @param array array to be sorted in place
      */
-    static public void heapSort(int[] array) {
+    static public <T extends Comparable<T>> void heapSort(T[] array) {
         // build max-heap
         buildMaxHeap(array);
 

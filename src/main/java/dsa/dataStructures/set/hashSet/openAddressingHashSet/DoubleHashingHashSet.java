@@ -91,12 +91,14 @@ public class DoubleHashingHashSet<T> extends OpenAddressingHashSet<T> {
 
     @Override
     public void growValuesArray() {
+        @SuppressWarnings("unchecked")
         LineEntry<T>[] newValues = (LineEntry<T>[]) Array.newInstance(LineEntry.class, nextPrime(values.length * 2));
         rehash(newValues);
     }
 
     @Override
     public void shrinkValuesArray() {
+        @SuppressWarnings("unchecked")
         LineEntry<T>[] newValues = (LineEntry<T>[]) Array.newInstance(LineEntry.class, previousPrime(values.length / 2));
         rehash(newValues);
     }

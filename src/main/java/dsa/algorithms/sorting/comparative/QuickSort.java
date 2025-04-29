@@ -20,11 +20,11 @@ public class QuickSort {
      * @param right the ending index of the segment to partition (pivot)
      * @return the final position of the pivot element
      */
-    static public int lomutoPartition(int[] array, int left, int right) {
-        int pivot = array[right];
+    static public <T extends Comparable<T>> int lomutoPartition(T[] array, int left, int right) {
+        T pivot = array[right];
         int i = left - 1;
         for (int j = left; j < right; j++) {
-            if (array[j] <= pivot) {
+            if (array[j].compareTo(pivot) <= 0) {
                 i++;
                 swap(array, i, j);
             }
@@ -45,8 +45,8 @@ public class QuickSort {
      * @param right the ending index of the segment to partition
      * @return the final position of the pivot element
      */
-    static public int hoarePartition(int[] array, int left, int right) {
-        int pivot = array[left];
+    static public <T extends Comparable<T>> int hoarePartition(T[] array, int left, int right) {
+        T pivot = array[left];
         int i = left - 1, j = right + 1;
 
         while (true) {
@@ -54,13 +54,13 @@ public class QuickSort {
             // than or equal to pivot
             do {
                 i++;
-            } while (array[i] < pivot);
+            } while (array[i].compareTo(pivot) < 0);
 
             // Find rightmost element smaller
             // than or equal to pivot
             do {
                 j--;
-            } while (array[j] > pivot);
+            } while (array[j].compareTo(pivot) > 0);
 
             // If two pointers met.
             if (i >= j) return j;
@@ -82,7 +82,7 @@ public class QuickSort {
      * @param right the ending index of the segment to partition
      * @return the final position of the pivot element
      */
-    static public int randomizedLomutoPartition(int[] array, int left, int right) {
+    static public <T extends Comparable<T>> int randomizedLomutoPartition(T[] array, int left, int right) {
         // generate random integer from uniform distribution in range [left, right], therefore inclusive on both sides
         int i = QuickSort.random.nextInt(right - left + 1) + left;
         // swap the element at random position with the last element making it pivot
@@ -102,7 +102,7 @@ public class QuickSort {
      * @param left  the starting index of the segment to sort
      * @param right the ending index of the segment to sort
      */
-    static public void quickSortLomuto(int[] array, int left, int right) {
+    static public <T extends Comparable<T>> void quickSortLomuto(T[] array, int left, int right) {
         // if left index is less than right index
         if (left < right) {
             // get pivot by calling the partition function
@@ -124,7 +124,7 @@ public class QuickSort {
      * @param left  the starting index of the segment to sort
      * @param right the ending index of the segment to sort
      */
-    static public void randomizedQuickSortLomuto(int[] array, int left, int right) {
+    static public <T extends Comparable<T>> void randomizedQuickSortLomuto(T[] array, int left, int right) {
         // if left index is less than right index
         if (left < right) {
             // get pivot by calling the partition function
@@ -147,7 +147,7 @@ public class QuickSort {
      * @param left  the starting index of the segment to sort
      * @param right the ending index of the segment to sort
      */
-    static public void quickSortHoare(int[] array, int left, int right) {
+    static public <T extends Comparable<T>> void quickSortHoare(T[] array, int left, int right) {
         // if left index is less than right index
         if (left < right) {
             // get pivot by calling the partition function
@@ -158,4 +158,7 @@ public class QuickSort {
             quickSortHoare(array, pivot + 1, right);
         }
     }
+
+    // todo, tends to be faster than classical quicksort for large datasets
+    static public void dualPivotQuickSort() {}
 }

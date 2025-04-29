@@ -19,12 +19,14 @@ public abstract class OpenAddressingHashSet<T> extends HashSet<T> {
 
     @Override
     protected void growValuesArray() {
+        @SuppressWarnings("unchecked")
         LineEntry<T>[] newValues = (LineEntry<T>[]) Array.newInstance(LineEntry.class, values.length * 2);
         rehash(newValues);
     }
 
     @Override
     protected void shrinkValuesArray() {
+        @SuppressWarnings("unchecked")
         LineEntry<T>[] newValues = (LineEntry<T>[]) Array.newInstance(LineEntry.class, values.length / 2);
         rehash(newValues);
     }
