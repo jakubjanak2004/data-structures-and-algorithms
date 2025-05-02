@@ -33,6 +33,7 @@ public class RadixSort {
             arr[i] = output[i];
     }
 
+    // todo implement radix for other number systems(binary,...)
     static public void radixSort(int[] arr, int max, int start, int size) {
         // iterate exp from 1 to the power of 10 eih condition that floor(max / exp) > 0
         for (int exp = 1; max / exp > 0; exp *= 10)

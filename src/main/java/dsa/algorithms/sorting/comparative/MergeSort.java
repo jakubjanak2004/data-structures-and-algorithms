@@ -51,6 +51,11 @@ public class MergeSort {
         return result;
     }
 
+    // todo finish
+    static <T extends Comparable<T>> void inPlaceMerge(T[] array, T[] aux, int low, int mid, int high) {
+
+    }
+
     /**
      * <h1>Merge Sort method</h1>
      * <p>
@@ -76,5 +81,13 @@ public class MergeSort {
 
         // return merged(sorted) arrays left and right
         return merge(sortedLeft, sortedRight);
+    }
+
+    // todo finish
+    public static <T extends Comparable<T>> void inPlaceMergeSort(T[] array, T[] aux, int low, int high) {
+        if (low >= high) return;
+
+        int mid = low + (high - low) / 2;
+
     }
 }

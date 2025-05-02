@@ -1,9 +1,14 @@
 package dsa.dataStructures.table;
 
 import dsa.dataStructures.set.hashSet.HashSet;
+import dsa.dataStructures.set.hashSet.openAddressingHashSet.DoubleHashingHashSet;
 
 public class HashTable<K, V> implements Table<K, V>{
     private final HashSet<Pair<K, V>> hashSet;
+
+    public HashTable() {
+        this.hashSet = new DoubleHashingHashSet<>();
+    }
 
     public HashTable(HashSet<Pair<K, V>> hashSet) {
         this.hashSet = hashSet;

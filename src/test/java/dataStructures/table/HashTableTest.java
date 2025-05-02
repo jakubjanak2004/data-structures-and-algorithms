@@ -2,7 +2,7 @@ package dataStructures.table;
 
 import dsa.dataStructures.set.hashSet.HashSet;
 import dsa.dataStructures.table.HashTable;
-import dsa.dataStructures.table.Pair;
+import dsa.dataStructures.table.Table;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -19,7 +19,7 @@ class HashTableTest {
 
     @ParameterizedTest(name = "testPutAndContains with hashSet: {1}")
     @MethodSource("loadAllHashTableChildren")
-    void testPutAndContains(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+    void testPutAndContains(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
         HashTable<String, Integer> table = new HashTable<>(hashSet);
         assertFalse(table.containsKey("apple"));
         assertEquals(0, table.size());
@@ -37,7 +37,7 @@ class HashTableTest {
 
     @ParameterizedTest(name = "testGetExistingKey with hashSet: {1}")
     @MethodSource("loadAllHashTableChildren")
-    void testGetExistingKey(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+    void testGetExistingKey(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
         HashTable<String, Integer> table = new HashTable<>(hashSet);
         table.put("dog", 5);
         table.put("cat", 7);
@@ -48,7 +48,7 @@ class HashTableTest {
 
     @ParameterizedTest(name = "testGetNonExistingKey with hashSet: {1}")
     @MethodSource("loadAllHashTableChildren")
-    void testGetNonExistingKey(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+    void testGetNonExistingKey(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
         HashTable<String, Integer> table = new HashTable<>(hashSet);
 
         table.put("house", 10);
@@ -59,7 +59,7 @@ class HashTableTest {
 
     @ParameterizedTest(name = "testOverwriteValue with hashSet: {1}")
     @MethodSource("loadAllHashTableChildren")
-    void testOverwriteValue(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+    void testOverwriteValue(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
         HashTable<String, Integer> table = new HashTable<>(hashSet);
 
         table.put("key", 10);
@@ -75,7 +75,7 @@ class HashTableTest {
 
     @ParameterizedTest(name = "testRemoveExistingKey with hashSet: {1}")
     @MethodSource("loadAllHashTableChildren")
-    void testRemoveExistingKey(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+    void testRemoveExistingKey(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
         HashTable<String, Integer> table = new HashTable<>(hashSet);
 
         table.put("one", 1);
@@ -94,7 +94,7 @@ class HashTableTest {
 
     @ParameterizedTest(name = "testRemoveNonExistingKey with hashSet: {1}")
     @MethodSource("loadAllHashTableChildren")
-    void testRemoveNonExistingKey(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+    void testRemoveNonExistingKey(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
         HashTable<String, Integer> table = new HashTable<>(hashSet);
 
         table.put("existing", 123);
@@ -110,7 +110,7 @@ class HashTableTest {
 
     @ParameterizedTest(name = "testMultipleOperations with hashSet: {1}")
     @MethodSource("loadAllHashTableChildren")
-    void testMultipleOperations(HashSet<Pair<String, Integer>> hashSet, String insertedHashSetName) {
+    void testMultipleOperations(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
         HashTable<String, Integer> table = new HashTable<>(hashSet);
 
         table.put("a", 1);
@@ -134,7 +134,7 @@ class HashTableTest {
 
     @ParameterizedTest(name = "testBigInsertions with hashSet: {1}")
     @MethodSource("loadAllHashTableChildren")
-    void testBigInsertions(HashSet<Pair<Integer, Integer>> hashSet, String insertedHashSetName) {
+    void testBigInsertions(HashSet<Table.Pair<Integer, Integer>> hashSet, String insertedHashSetName) {
         HashTable<Integer, Integer> table = new HashTable<>(hashSet);
         int maximalElement = 1000000;
         for (int i = 0; i < maximalElement; i++) {
