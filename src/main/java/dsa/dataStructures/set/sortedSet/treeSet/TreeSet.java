@@ -9,12 +9,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Iterator;
 
 public class TreeSet<T extends Comparable<T>> extends SortedSet<T>{
-    private final Tree<T> tree = new AVLTree<>();
+    private final Tree<T> tree;
 
-    // todo injection of Tree class will be implemented
-//    public TreeSet(Tree<T> tree) {
-//        this.tree = tree;
-//    }
+    public TreeSet() {
+        this.tree = new AVLTree<>();
+    }
+
+    public TreeSet(Tree<T> tree) {
+        this.tree = tree;
+    }
 
     @Override
     public T min() {

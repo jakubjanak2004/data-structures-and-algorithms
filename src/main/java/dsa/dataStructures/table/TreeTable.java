@@ -1,43 +1,42 @@
 package dsa.dataStructures.table;
 
-import dsa.dataStructures.tree.Tree;
-import dsa.dataStructures.tree.balancedTree.AVLTree;
+import dsa.dataStructures.set.sortedSet.treeSet.TreeSet;
 import org.jetbrains.annotations.NotNull;
 
 public class TreeTable<K extends Comparable<K>, V> implements Table<K, V> {
-    private final Tree<TreePair<K, V>> tree;
+    private final TreeSet<TreePair<K, V>> treeSet;
 
     public TreeTable() {
-        this.tree = new AVLTree<>();
+        this.treeSet = new TreeSet<>();
     }
 
-    public TreeTable(Tree<TreePair<K, V>> tree) {
-        this.tree = tree;
+    public TreeTable(TreeSet<TreePair<K, V>> tree) {
+        this.treeSet = tree;
     }
 
     @Override
     public int size() {
-        return tree.size();
+        return treeSet.size();
     }
 
     @Override
     public void put(K key, V value) {
-        tree.addOrReplace(new TreePair<>(key, value));
+        treeSet.addOrReplace(new TreePair<>(key, value));
     }
 
     @Override
     public void remove(K key) {
-        tree.remove(new TreePair<>(key, null));
+        treeSet.remove(new TreePair<>(key, null));
     }
 
     @Override
     public boolean containsKey(K key) {
-        return tree.contains(new TreePair<>(key, null));
+        return treeSet.contains(new TreePair<>(key, null));
     }
 
     @Override
     public V get(K key) {
-        TreePair<K, V> returnedPair = tree.get(new TreePair<>(key, null));
+        TreePair<K, V> returnedPair = treeSet.get(new TreePair<>(key, null));
         return returnedPair == null ? null : returnedPair.getValue();
     }
 
