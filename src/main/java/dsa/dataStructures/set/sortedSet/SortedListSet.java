@@ -6,10 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
-// todo make faster
-// todo optimisation can be done, instead of looping from beginning loop from where the linked lists point is, therefore on average will have to make less moves
-// todo interpolation can be implementing, determine where the element is based on the maximum and minimum
-// todo use faster search algo, interpolation/binary search
 public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
     private final LinkedList<T> sortedLinkedList = new SinglyLinkedList<>();
 
@@ -84,11 +80,13 @@ public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
         }
     }
 
+    // todo
     @Override
     public T min() {
         return null;
     }
 
+    // todo
     @Override
     public T max() {
         return null;
@@ -97,6 +95,6 @@ public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
     @NotNull
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return sortedLinkedList.iterator();
     }
 }

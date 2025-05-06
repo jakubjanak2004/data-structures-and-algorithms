@@ -9,7 +9,7 @@ public class MergeSort {
      * <p>
      * merge method to combine sorted arrays into sorted array
      *
-     * @param left array to be combined
+     * @param left  array to be combined
      * @param right array to be combined
      * @return sorted array containing elements of left and right arrays
      */
@@ -51,9 +51,33 @@ public class MergeSort {
         return result;
     }
 
-    // todo finish
-    static <T extends Comparable<T>> void inPlaceMerge(T[] array, T[] aux, int low, int mid, int high) {
+    static <T extends Comparable<T>> void inPlaceMerge(T[] array, T[] aux, int low, int high) {
+        int mid = (low + high) / 2;
+        int i1 = low;
+        int i2 = mid + 1;
+        int j = low;
 
+        while ((i1 <= mid) && (i2 <= high)) {
+            if (array[i1].compareTo(array[i2]) <= 0) {
+                aux[j] = array[i1];
+                i1++;
+            } else {
+                aux[j] = array[i2];
+                i2++;
+            }
+            j++;
+        }
+
+        while (i1 <= mid) {
+            aux[j] = array[i1];
+            i1++;
+            j++;
+        }
+        while (i2 <= high) {
+            aux[j] = array[i2];
+            i2++;
+            j++;
+        }
     }
 
     /**
@@ -83,11 +107,22 @@ public class MergeSort {
         return merge(sortedLeft, sortedRight);
     }
 
-    // todo finish
     public static <T extends Comparable<T>> void inPlaceMergeSort(T[] array, T[] aux, int low, int high) {
+        // base case: if the low and high are the same we stop the recursion
         if (low >= high) return;
 
-        int mid = low + (high - low) / 2;
+        //  split the array [a1, a2, ..., an] by mid: floor(n / 2) into left: [a1, ..., a(mid)] and right: [a(mid + 1), ..., an]
+        int mid = (low + high) / 2;
 
+        // call recursively merge sort on left and right arrays
+        inPlaceMergeSort(array, aux, low, mid);
+        inPlaceMergeSort(array, aux, mid + 1, high);
+
+        // merge sorted sub-arrays into the aux array
+        inPlaceMerge(array, aux, low, high);
+
+        // copying aux to array from low to high
+        // optimised copying
+        System.arraycopy(aux, low, array, low, high + 1 - low);
     }
 }
