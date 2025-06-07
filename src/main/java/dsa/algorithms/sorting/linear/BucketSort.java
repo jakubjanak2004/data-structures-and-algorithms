@@ -1,5 +1,9 @@
 package dsa.algorithms.sorting.linear;
 
+import dsa.algorithms.sorting.MaxValue;
+import dsa.algorithms.sorting.SortingAlgo;
+
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +39,7 @@ public class BucketSort {
      * @param max     The maximum value in the input array, used for normalization.
      * @param <T>     A numeric type that extends Number.
      */
-    public static <T extends Number> void bucketSort(T[] array, ArrayList<T>[] buckets, T max) {
+    public static <T extends Number> void bucketSort(T[] array, List<T>[] buckets, T max) {
         for (int i = 0; i < buckets.length; i++) {
             buckets[i] = new ArrayList<>();
         }
@@ -45,15 +49,20 @@ public class BucketSort {
             buckets[bucketIndex].add(value);
         }
 
-        for (ArrayList<T> ts : buckets) {
+        for (List<T> ts : buckets) {
             insertionSort(ts);
         }
 
         int index = 0;
-        for (ArrayList<T> bucket : buckets) {
+        for (List<T> bucket : buckets) {
             for (T t : bucket) {
                 array[index++] = t;
             }
         }
+    }
+
+    @SortingAlgo
+    public static <T extends Number> void bucketSort(T[] array, @MaxValue T max) {
+        bucketSort(array, new ArrayList[array.length], max);
     }
 }

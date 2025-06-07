@@ -9,8 +9,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static dataStructures.TestHelpers.getInstantiatedChildrenForClass;
 import static org.junit.jupiter.api.Assertions.*;
+import static utils.TestHelpers.getInstantiatedChildrenForClass;
 
 class HashTableTest {
     public static Stream<Arguments> loadAllHashTableChildren() {

@@ -1,5 +1,10 @@
 package dsa.algorithms.sorting.linear;
 
+import dsa.algorithms.sorting.MaxValue;
+import dsa.algorithms.sorting.SortingAlgo;
+
+import java.util.Arrays;
+
 public class CountingSort {
     /**
      * <h1>Counting Sort Algorithm</h1>
@@ -13,9 +18,13 @@ public class CountingSort {
      * @param input the array to be sorted (in place)
      * @param max the maximum expected value in the input range
      */
-    public static void countingSort(int[] input, int max) {
+    @SortingAlgo(onlyInteger = true)
+    public static void countingSort(Integer[] input, @MaxValue int max) {
         // create array holding the number of each element from 0 to max
-        int[] c = new int[max + 1];
+        Integer[] c = new Integer[max + 1];
+
+        // fill array with zeros
+        Arrays.fill(c, 0);
 
         // for each element of the input increase the c at index of that element
         for (int i : input) {
@@ -28,7 +37,7 @@ public class CountingSort {
         }
 
         // create new array sorted
-        int[] sorted = new int[input.length];
+        Integer[] sorted = new Integer[input.length];
         // iterate from last to first element of the input array
         for (int i = input.length - 1; i >= 0; i--) {
             // init current as input at iteration

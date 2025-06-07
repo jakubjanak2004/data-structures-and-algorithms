@@ -14,6 +14,7 @@ public class ClassicMatmul {
      * @return the resulting matrix C after multiplication (m x p)
      * @throws IllegalArgumentException if the number of columns in A does not match the number of rows in B
      */
+    @MatMul(def = true)
     public static double[][] matmul(double[][] A, double[][] B) {
         // m is the number of rows in A
         int m = A.length;

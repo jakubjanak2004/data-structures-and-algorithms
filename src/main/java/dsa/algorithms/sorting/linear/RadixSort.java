@@ -1,8 +1,11 @@
 package dsa.algorithms.sorting.linear;
 
+import dsa.algorithms.sorting.MaxValue;
+import dsa.algorithms.sorting.SortingAlgo;
+
 // todo finish commenting the radix sort
 public class RadixSort {
-    static void countingSortForRadix(int[] arr, int start, int size, int exp) {
+    static void countingSortForRadix(Integer[] arr, int start, int size, int exp) {
         // create output array
         int[] output = new int[size];
         // declare index i
@@ -34,10 +37,15 @@ public class RadixSort {
     }
 
     // todo implement radix for other number systems(binary,...)
-    static public void radixSort(int[] arr, int max, int start, int size) {
+    static public void radixSort(Integer[] arr, int max, int start, int size) {
         // iterate exp from 1 to the power of 10 eih condition that floor(max / exp) > 0
         for (int exp = 1; max / exp > 0; exp *= 10)
             // call counting sort for radix with exp
             countingSortForRadix(arr, start, size, exp);
+    }
+
+    @SortingAlgo(onlyInteger = true)
+    static public void radixSort(Integer[] arr, @MaxValue int max) {
+        radixSort(arr, max, 0, arr.length);
     }
 }

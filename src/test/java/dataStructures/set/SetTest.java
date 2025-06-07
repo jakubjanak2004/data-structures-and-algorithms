@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
-import static dataStructures.TestHelpers.getInstantiatedChildrenForClass;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static utils.TestHelpers.getInstantiatedChildrenForClass;
 
 public class SetTest {
     private static Random random = new Random();

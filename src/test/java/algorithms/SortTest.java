@@ -1,220 +1,111 @@
 package algorithms;
 
-import dsa.algorithms.sorting.comparative.HeapSort;
-import dsa.algorithms.sorting.comparative.InsertionSort;
-import dsa.algorithms.sorting.comparative.MergeSort;
-import dsa.algorithms.sorting.comparative.QuickSort;
-import dsa.algorithms.sorting.linear.BucketSort;
-import dsa.algorithms.sorting.linear.CountingSort;
-import dsa.algorithms.sorting.linear.RadixSort;
-import org.junit.Test;
+import dsa.algorithms.sorting.MaxValue;
+import dsa.algorithms.sorting.SortingAlgo;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.TestFactory;
+import org.reflections.Reflections;
+import org.reflections.scanners.MethodAnnotationsScanner;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+import java.util.List;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static utils.TestHelpers.getIntegerObjectArray;
 
+// todo rename and delete the SortTest class
 public class SortTest {
-    private static final int MIN = 0;
-    private static final int MAX = 10;
-    private static final int NUMBER_OF_ELEMENTS = 1000;
+    private static final int MIN_NUM_ELEMENTS = 10;
+    private static final int MAX_NUM_ELEMENTS = 10_000;
+    private static final int NUMBER_OF_INSTANCES = 10;
+    private static final int ELEMENT_MIN = 1;
+    private static final int ELEMENT_MAX = 1000;
+    Reflections reflections = new Reflections("dsa.algorithms.sorting", new MethodAnnotationsScanner());
+    private final List<Integer[]> sortingProblemsList = new ArrayList<>();
 
-    private static int[] getIntArray() {
-        Random random = new Random();
-        return random.ints(NUMBER_OF_ELEMENTS, MIN, MAX + 1).toArray();
-    }
-
-    public static double[] getDoubleArray() {
-        Random random = new Random();
-        return random.doubles(NUMBER_OF_ELEMENTS, MIN, MAX).toArray();
-    }
-
-    public static Integer[] getIntegerObjectArray() {
-        int[] array = getIntArray();
-        Integer[] result = new Integer[array.length];
-        for (int i = 0; i < array.length; i++) {
-            result[i] = array[i]; // auto-boxing
+    @BeforeEach
+    void setup() {
+        int step = (MAX_NUM_ELEMENTS - MIN_NUM_ELEMENTS) / NUMBER_OF_INSTANCES;
+        for (int i = MIN_NUM_ELEMENTS; i <= MAX_NUM_ELEMENTS; i += step) {
+            sortingProblemsList.add(getIntegerObjectArray(i, ELEMENT_MIN, ELEMENT_MAX));
         }
-        return result;
     }
 
-    public static Double[] getDoubleObjectArray() {
-        double[] array = getDoubleArray();
-        Double[] result = new Double[array.length];
-        for (int i = 0; i < array.length; i++) {
-            result[i] = array[i];
+    @TestFactory
+    Stream<DynamicTest> inPlaceSortTests() {
+        return reflections.getMethodsAnnotatedWith(SortingAlgo.class).stream()
+                .filter(method -> method.getAnnotation(SortingAlgo.class).inplace())
+                .flatMap(this::inPlaceSortTest);
+    }
+
+    @TestFactory
+    Stream<DynamicTest> notInPlaceSortTests() {
+        return reflections.getMethodsAnnotatedWith(SortingAlgo.class).stream()
+                .filter(method -> !method.getAnnotation(SortingAlgo.class).inplace())
+                .flatMap(this::notInPlaceSortTest);
+    }
+
+    private Stream<DynamicTest> inPlaceSortTest(Method method) {
+        return sortingProblemsList.stream()
+                .map(problem -> dynamicTest("[" + method.getName() + " with array of length " + problem.length + " ]", () -> {
+                    Integer[] expected = problem.clone();
+                    Integer[] actual = problem.clone();
+
+                    // sort using native sorting
+                    Arrays.sort(expected);
+
+                    // sort using my sort
+                    try {
+                        method.invoke(null, buildArgumentsForMethod(method, actual));
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    // assert the results
+                    Assertions.assertArrayEquals(expected, actual);
+                }));
+    }
+
+    private Stream<DynamicTest> notInPlaceSortTest(Method method) {
+        return sortingProblemsList.stream()
+                .map(problem -> dynamicTest("[" + method.getName() + " with array of length " + problem.length + " ]", () -> {
+                    Integer[] expected = problem.clone();
+                    Integer[] actual = problem.clone();
+
+                    // sort using native sorting
+                    Arrays.sort(expected);
+
+                    // sort using my sort
+                    try {
+                        actual = (Integer[]) method.invoke(null, buildArgumentsForMethod(method, actual));
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    // assert the results
+                    Assertions.assertArrayEquals(expected, actual);
+                }));
+    }
+
+    private Object[] buildArgumentsForMethod(Method method, Object[] actual) {
+        Parameter[] parameters = method.getParameters();
+        List<Object> args = new ArrayList<>();
+        for (Parameter param : parameters) {
+            if (param.isAnnotationPresent(MaxValue.class)) {
+                args.add(ELEMENT_MAX);
+            } else if (param.getType().isArray()) {
+                args.add(actual);
+            } else {
+                throw new IllegalArgumentException("Unsupported parameter: " + param);
+            }
         }
-        return result;
-    }
-
-    @Test
-    public void testRadix() {
-        int[] original = getIntArray();
-
-        int[] expected = original.clone();
-        int[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        RadixSort.radixSort(actual, MAX, 0, actual.length);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testCounting() {
-        int[] original = getIntArray();
-
-        int[] expected = original.clone();
-        int[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        CountingSort.countingSort(actual, MAX);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testBucketSort() {
-        Double[] original = getDoubleObjectArray();
-
-        Double[] expected = original.clone();
-        Double[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        BucketSort.bucketSort(actual, new ArrayList[original.length], MAX);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testInsertion() {
-        Integer[] original = getIntegerObjectArray();
-
-        Integer[] expected = original.clone();
-        Integer[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        InsertionSort.insertionSort(actual);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testMerge() {
-        Integer[] original = getIntegerObjectArray();
-
-        Integer[] expected = original.clone();
-        Integer[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        actual = MergeSort.mergeSort(actual);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testInPlaceMerge() {
-        Integer[] original = getIntegerObjectArray();
-
-        Integer[] expected = original.clone();
-        Integer[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        MergeSort.inPlaceMergeSort(actual, actual.clone(), 0, actual.length - 1);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testHeap() {
-        Integer[] original = getIntegerObjectArray();
-
-        Integer[] expected = original.clone();
-        Integer[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        HeapSort.heapSort(actual);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testRandomizedQuickWithLomuto() {
-        Integer[] original = getIntegerObjectArray();
-
-        Integer[] expected = original.clone();
-        Integer[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        QuickSort.randomizedQuickSortLomuto(actual, 0, actual.length - 1);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testQuickWithLomuto() {
-        Integer[] original = getIntegerObjectArray();
-
-        Integer[] expected = original.clone();
-        Integer[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        QuickSort.quickSortLomuto(actual, 0, actual.length - 1);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testQuickWithHoare() {
-        Integer[] original = getIntegerObjectArray();
-
-        Integer[] expected = original.clone();
-        Integer[] actual = original.clone();
-
-        // sort using native sorting
-        Arrays.sort(expected);
-
-        // sort using my sort
-        QuickSort.quickSortHoare(actual, 0, actual.length - 1);
-
-        // assert the results
-        assertArrayEquals(expected, actual);
+        return args.toArray();
     }
 }

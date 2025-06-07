@@ -1,17 +1,115 @@
 package algorithms;
 
 import dsa.algorithms.matrix.ClassicMatmul;
+import dsa.algorithms.matrix.MatMul;
 import dsa.algorithms.matrix.StrassenMatmul;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.TestFactory;
+import org.reflections.Reflections;
+import org.reflections.scanners.MethodAnnotationsScanner;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static dsa.algorithms.Utils.deepCopy2D;
 import static dsa.algorithms.matrix.StrassenMatmul.scalarMul;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 public class MatmulTest {
+    static final double MIN_VALUE = 0;
+    static final double MAX_VALUE = 100.0;
+    private static final int MAX_MATRIX_SIZE = (int) Math.pow(2, 9);
+    private static final ArrayList<double[][]> matricesA = new ArrayList<>();
+    private static final ArrayList<double[][]> matricesB = new ArrayList<>();
+    Reflections reflections = new Reflections("dsa.algorithms.matrix", new MethodAnnotationsScanner());
+
+    @BeforeAll
+    static void setup() {
+        for (int i = 2; i <= MAX_MATRIX_SIZE; i *= 2) {
+            double[][] newMatrixA = new double[i][i];
+            double[][] newMatrixB = new double[i][i];
+
+            for (int row = 0; row < i; row++) {
+                for (int col = 0; col < i; col++) {
+                    newMatrixA[row][col] = (int) (MIN_VALUE + (MAX_VALUE - MIN_VALUE) * Math.random());
+                    newMatrixB[row][col] = (int) (MIN_VALUE + (MAX_VALUE - MIN_VALUE) * Math.random());
+                }
+            }
+            matricesA.add(newMatrixA);
+            matricesB.add(newMatrixB);
+        }
+    }
+
+    @TestFactory
+    Stream<DynamicTest> testClassicMatmul() {
+        return reflections.getMethodsAnnotatedWith(MatMul.class).stream()
+                .filter(method -> method.getAnnotation(MatMul.class).def())
+                .flatMap(this::runMatMul);
+    }
+
+    @TestFactory
+    Stream<DynamicTest> testRecursiveMatmul() {
+        return reflections.getMethodsAnnotatedWith(MatMul.class).stream()
+                .filter(method -> !method.getAnnotation(MatMul.class).def())
+                .flatMap(this::matmulTest);
+    }
+
+    private Stream<DynamicTest> runMatMul(Method method) {
+        List<DynamicTest> tests = new ArrayList<>();
+
+        for (int i = 0; i < matricesA.size(); i++) {
+            double[][] A = matricesA.get(i);
+            double[][] B = matricesB.get(i);
+
+            DynamicTest test = DynamicTest.dynamicTest(
+                    "Matmul test with matrices of size: " + A.length + " using " + method.getName(),
+                    () -> {
+                        try {
+                            method.invoke(null, A, B);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+            );
+
+            tests.add(test);
+        }
+
+        return tests.stream();
+    }
+
+    private Stream<DynamicTest> matmulTest(Method method) {
+        List<DynamicTest> tests = new ArrayList<>();
+
+        for (int i = 0; i < matricesA.size(); i++) {
+            double[][] A = matricesA.get(i);
+            double[][] B = matricesB.get(i);
+            double[][] expected = ClassicMatmul.matmul(A, B);
+
+            DynamicTest test = DynamicTest.dynamicTest(
+                    "Matmul test with matrices of size: " + A.length + " using " + method.getName(),
+                    () -> {
+                        try {
+                            double[][] actual = (double[][]) method.invoke(null, A, B);
+                            assertArrayEquals(expected, actual);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+            );
+
+            tests.add(test);
+        }
+
+        return tests.stream();
+    }
 
     @Test
     public void testIncompatibleShapesThrowsException() {
@@ -32,93 +130,6 @@ public class MatmulTest {
 
         String expectedMessage = "Matrix multiplication error";
         assertTrue(exception.getMessage().contains(expectedMessage));
-    }
-
-    @Test
-    public void testValidMultiplication() {
-        double[][] A = {
-                {1, 2},
-                {3, 4}
-        };
-
-        double[][] B = {
-                {5, 6},
-                {7, 8}
-        };
-
-        double[][] expected = {
-                {19, 22},
-                {43, 50}
-        };
-
-        double[][] result = ClassicMatmul.matmul(A, B);
-
-        assertEquals(expected.length, result.length);
-        assertEquals(expected[0].length, result[0].length);
-
-        for (int i = 0; i < expected.length; i++) {
-            for (int j = 0; j < expected[0].length; j++) {
-                assertEquals(expected[i][j], result[i][j], 1e-9);
-            }
-        }
-    }
-
-    @Test
-    public void testValidMultiplicationForStrassen() {
-        double[][] A = {
-                {1, 2, 3, 4},
-                {5, 6, 7, 8},
-                {9, 8, 7, 6},
-                {5, 4, 3, 2}
-        };
-
-        double[][] B = {
-                {1, 0, 2, 1},
-                {0, 1, 2, 0},
-                {1, 0, 1, 2},
-                {0, 2, 3, 1}
-        };
-
-        double[][] expected = ClassicMatmul.matmul(A, B);
-        double[][] result = StrassenMatmul.strassenMatmul(A, B);
-
-        assertEquals(expected.length, result.length);
-        assertEquals(expected[0].length, result[0].length);
-
-        for (int i = 0; i < expected.length; i++) {
-            for (int j = 0; j < expected[0].length; j++) {
-                assertEquals(expected[i][j], result[i][j], 1e-9);
-            }
-        }
-    }
-
-    @Test
-    public void testValidMultiplicationForDivideConquer() {
-        double[][] A = {
-                {1, 2, 3, 4},
-                {5, 6, 7, 8},
-                {9, 8, 7, 6},
-                {5, 4, 3, 2}
-        };
-
-        double[][] B = {
-                {1, 0, 2, 1},
-                {0, 1, 2, 0},
-                {1, 0, 1, 2},
-                {0, 2, 3, 1}
-        };
-
-        double[][] expected = ClassicMatmul.matmul(A, B);
-        double[][] result = StrassenMatmul.divideAndConquerMatmul(A, B);
-
-        assertEquals(expected.length, result.length);
-        assertEquals(expected[0].length, result[0].length);
-
-        for (int i = 0; i < expected.length; i++) {
-            for (int j = 0; j < expected[0].length; j++) {
-                assertEquals(expected[i][j], result[i][j], 1e-9);
-            }
-        }
     }
 
     @Test

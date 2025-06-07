@@ -1,10 +1,11 @@
-package dataStructures;
+package utils;
 
 import org.junit.jupiter.params.provider.Arguments;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Modifier;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,5 +36,33 @@ public class TestHelpers {
                         packageName, clazz
                 )
         );
+    }
+
+    public static int[] getIntArray(int numberOfElements, int min, int max) {
+        Random random = new Random();
+        return random.ints(numberOfElements, min, max + 1).toArray();
+    }
+
+    public static double[] getDoubleArray(int numberOfElements, int min, int max) {
+        Random random = new Random();
+        return random.doubles(numberOfElements, min, max).toArray();
+    }
+
+    public static Integer[] getIntegerObjectArray(int numberOfElements, int min, int max) {
+        int[] array = getIntArray(numberOfElements, min, max);
+        Integer[] result = new Integer[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i]; // auto-boxing
+        }
+        return result;
+    }
+
+    public static Double[] getDoubleObjectArray(int numberOfElements, int min, int max) {
+        double[] array = getDoubleArray(numberOfElements, min, max);
+        Double[] result = new Double[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
     }
 }

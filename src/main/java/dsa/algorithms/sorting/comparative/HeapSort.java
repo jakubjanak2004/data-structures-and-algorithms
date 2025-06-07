@@ -1,5 +1,7 @@
 package dsa.algorithms.sorting.comparative;
 
+import dsa.algorithms.sorting.SortingAlgo;
+
 import static dsa.algorithms.Utils.swap;
 
 public class HeapSort {
@@ -25,18 +27,6 @@ public class HeapSort {
      */
     static int right(int i) {
         return 2 * i + 2;
-    }
-
-    /**
-     * <h1>Parent Index</h1>
-     * <p>
-     * Calculates the index of the parent of a given node index in a binary heap.
-     *
-     * @param i the index of the child node
-     * @return the index of the parent node
-     */
-    static int parent(int i) {
-        return (i - 1) / 2;
     }
 
     /**
@@ -100,6 +90,7 @@ public class HeapSort {
      *
      * @param array array to be sorted in place
      */
+    @SortingAlgo
     static public <T extends Comparable<T>> void heapSort(T[] array) {
         // build max-heap
         buildMaxHeap(array);

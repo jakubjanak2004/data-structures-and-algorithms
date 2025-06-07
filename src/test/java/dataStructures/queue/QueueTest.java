@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static dataStructures.TestHelpers.getInstantiatedChildrenForClass;
 import static org.junit.Assert.assertThrows;
+import static utils.TestHelpers.getInstantiatedChildrenForClass;
 
 public class QueueTest {
     public static Stream<Arguments> loadAllQueueImplementations() {

@@ -1,5 +1,7 @@
 package dsa.algorithms.sorting.comparative;
 
+import dsa.algorithms.sorting.SortingAlgo;
+
 public class InsertionSort {
     /**
      * <h1>Insertion Sort Algorithm</h1>
@@ -10,6 +12,7 @@ public class InsertionSort {
      *
      * @param array the array to be sorted in place
      */
+    @SortingAlgo
     static public <T extends Comparable<T>> void insertionSort(T[] array) {
         // set n as the length of array
         int n = array.length;

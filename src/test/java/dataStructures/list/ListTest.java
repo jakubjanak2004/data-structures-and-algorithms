@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static dataStructures.TestHelpers.getInstantiatedChildrenForClass;
+import static utils.TestHelpers.getInstantiatedChildrenForClass;
 
 // todo I had to add if statements into the tests, maybe split into different tests
 // todo there are three tests with those if statements

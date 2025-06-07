@@ -3,14 +3,14 @@ package dsa.algorithms.matrix;
 import static dsa.algorithms.Utils.deepCopy2D;
 
 public class StrassenMatmul {
-    public final static int MINIMAL_LENGTH_FOR_STRASSEN = 1;
+    public final static int MINIMAL_SIZE_FOR_RECURSION = 128;
 
     /**
-     * Splits a square matrix of size 2^n x 2^n into four equally sized submatrices (quadrants).
+     * Splits a square matrix of size 2^n x 2^n into four equally sized sub-matrices (quadrants).
      * The result contains: top-left (A11), top-right (A12), bottom-left (A21), and bottom-right (A22).
      *
      * @param matrix the input square matrix to be split
-     * @return an array containing the 4 submatrices: {A11, A12, A21, A22}
+     * @return an array containing the 4 sub-matrices: {A11, A12, A21, A22}
      * @throws IllegalArgumentException if the input matrix is not square or its size is not a power of 2
      */
     public static double[][][] split(final double[][] matrix) {
@@ -142,6 +142,7 @@ public class StrassenMatmul {
      * @return the result of multiplying A and B using Strassen's algorithm
      * @throws IllegalArgumentException if matrices are not square or their dimensions are not powers of 2
      */
+    @MatMul
     public static double[][] strassenMatmul(final double[][] A, final double[][] B) {
         int n = A.length;
         if (A[0].length != n || B.length != n || B[0].length != n) {
@@ -152,7 +153,7 @@ public class StrassenMatmul {
         }
 
         // base case
-        if (n <= MINIMAL_LENGTH_FOR_STRASSEN) {
+        if (n <= MINIMAL_SIZE_FOR_RECURSION) {
             return ClassicMatmul.matmul(A, B);
         }
 
@@ -187,7 +188,7 @@ public class StrassenMatmul {
      * Multiplies two square matrices using the classic divide-and-conquer matrix multiplication algorithm.
      * <p>
      * The input matrices must be square and have dimensions of size 2^n × 2^n.
-     * This algorithm recursively splits the input matrices into 4 submatrices each,
+     * This algorithm recursively splits the input matrices into 4 sub-matrices each,
      * performs 8 recursive multiplications, and combines the results into the final matrix.
      * <p>
      * Unlike Strassen’s algorithm, this version performs all 8 recursive products and has no optimization
@@ -199,6 +200,7 @@ public class StrassenMatmul {
      * @throws IllegalArgumentException if the input matrices are not square or their sizes are not powers of 2
      */
 
+    @MatMul
     public static double[][] divideAndConquerMatmul(final double[][] A, final double[][] B) {
         int n = A.length;
         if (A[0].length != n || B.length != n || B[0].length != n) {
@@ -209,7 +211,7 @@ public class StrassenMatmul {
         }
 
         // base case
-        if (n <= MINIMAL_LENGTH_FOR_STRASSEN) {
+        if (n <= MINIMAL_SIZE_FOR_RECURSION) {
             return ClassicMatmul.matmul(A, B);
         }
 

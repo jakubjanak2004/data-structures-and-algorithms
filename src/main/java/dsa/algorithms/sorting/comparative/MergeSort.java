@@ -1,5 +1,7 @@
 package dsa.algorithms.sorting.comparative;
 
+import dsa.algorithms.sorting.SortingAlgo;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
@@ -13,7 +15,7 @@ public class MergeSort {
      * @param right array to be combined
      * @return sorted array containing elements of left and right arrays
      */
-    static <T extends Comparable<T>> T[] merge(T[] left, T[] right) {
+    private static <T extends Comparable<T>> T[] merge(T[] left, T[] right) {
         // prepare result array
         @SuppressWarnings("unchecked")
         T[] result = (T[]) Array.newInstance(left.getClass().getComponentType(), left.length + right.length);
@@ -51,7 +53,15 @@ public class MergeSort {
         return result;
     }
 
-    static <T extends Comparable<T>> void inPlaceMerge(T[] array, T[] aux, int low, int high) {
+    /**
+     *
+     * @param array
+     * @param aux
+     * @param low
+     * @param high
+     * @param <T>
+     */
+    private static <T extends Comparable<T>> void inPlaceMerge(T[] array, T[] aux, int low, int high) {
         int mid = (low + high) / 2;
         int i1 = low;
         int i2 = mid + 1;
@@ -88,6 +98,7 @@ public class MergeSort {
      * @param array input array sorted in place
      * @return sorted array of integers
      */
+    @SortingAlgo(inplace = false)
     public static <T extends Comparable<T>> T[] mergeSort(T[] array) {
         // base case: if array length is one just return the array
         if (array.length <= 1) {
@@ -107,6 +118,14 @@ public class MergeSort {
         return merge(sortedLeft, sortedRight);
     }
 
+    /**
+     * Inplace variant of the merge sort algorithms.
+     * @param array
+     * @param aux
+     * @param low
+     * @param high
+     * @param <T>
+     */
     public static <T extends Comparable<T>> void inPlaceMergeSort(T[] array, T[] aux, int low, int high) {
         // base case: if the low and high are the same we stop the recursion
         if (low >= high) return;
@@ -124,5 +143,15 @@ public class MergeSort {
         // copying aux to array from low to high
         // optimised copying
         System.arraycopy(aux, low, array, low, high + 1 - low);
+    }
+
+    /**
+     * Is called by the test framework
+     * @param array
+     * @param <T>
+     */
+    @SortingAlgo
+    public static <T extends Comparable<T>> void inPlaceMergeSort(T[] array) {
+        inPlaceMergeSort(array, Arrays.copyOfRange(array, 0, array.length), 0, array.length - 1);
     }
 }

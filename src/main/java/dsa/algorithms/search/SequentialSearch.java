@@ -3,6 +3,7 @@ package dsa.algorithms.search;
 import java.util.Objects;
 
 public class SequentialSearch {
+    @SearchAlgo
     public static <T> int sequentialSearch(T[] array, T element) {
         for (int i = 0; i < array.length; i++) {
             if (Objects.equals(element, array[i])) {
@@ -12,6 +13,7 @@ public class SequentialSearch {
         return -1;
     }
 
+    @SearchAlgo
     public static <T> int sequentialSentinelSearch(T[] array, T element) {
         if (Objects.equals(element, array[array.length - 1])) {
             return array.length - 1;

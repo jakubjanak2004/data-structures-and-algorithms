@@ -1,5 +1,7 @@
 package dsa.algorithms.sorting.comparative;
 
+import dsa.algorithms.sorting.SortingAlgo;
+
 import java.util.Random;
 
 import static dsa.algorithms.Utils.swap;
@@ -20,7 +22,7 @@ public class QuickSort {
      * @param right the ending index of the segment to partition (pivot)
      * @return the final position of the pivot element
      */
-    static public <T extends Comparable<T>> int lomutoPartition(T[] array, int left, int right) {
+    private static <T extends Comparable<T>> int lomutoPartition(T[] array, int left, int right) {
         T pivot = array[right];
         int i = left - 1;
         for (int j = left; j < right; j++) {
@@ -45,7 +47,7 @@ public class QuickSort {
      * @param right the ending index of the segment to partition
      * @return the final position of the pivot element
      */
-    static public <T extends Comparable<T>> int hoarePartition(T[] array, int left, int right) {
+    private static <T extends Comparable<T>> int hoarePartition(T[] array, int left, int right) {
         T pivot = array[left];
         int i = left - 1, j = right + 1;
 
@@ -82,7 +84,7 @@ public class QuickSort {
      * @param right the ending index of the segment to partition
      * @return the final position of the pivot element
      */
-    static public <T extends Comparable<T>> int randomizedLomutoPartition(T[] array, int left, int right) {
+    private static <T extends Comparable<T>> int randomizedLomutoPartition(T[] array, int left, int right) {
         // generate random integer from uniform distribution in range [left, right], therefore inclusive on both sides
         int i = QuickSort.random.nextInt(right - left + 1) + left;
         // swap the element at random position with the last element making it pivot
@@ -114,16 +116,22 @@ public class QuickSort {
         }
     }
 
-    /**
-     * <h1>Randomized QuickSort (Lomuto Partition)</h1>
-     * <p>
-     * Recursively sorts the given array using QuickSort and a randomized version of the Lomuto partition scheme.
-     * The pivot is chosen at random to improve performance on certain inputs.
-     *
-     * @param array the array to be sorted
-     * @param left  the starting index of the segment to sort
-     * @param right the ending index of the segment to sort
-     */
+    @SortingAlgo
+    static public <T extends Comparable<T>> void quickSortLomuto(T[] array) {
+        quickSortLomuto(array, 0, array.length - 1);
+    }
+
+
+        /**
+         * <h1>Randomized QuickSort (Lomuto Partition)</h1>
+         * <p>
+         * Recursively sorts the given array using QuickSort and a randomized version of the Lomuto partition scheme.
+         * The pivot is chosen at random to improve performance on certain inputs.
+         *
+         * @param array the array to be sorted
+         * @param left  the starting index of the segment to sort
+         * @param right the ending index of the segment to sort
+         */
     static public <T extends Comparable<T>> void randomizedQuickSortLomuto(T[] array, int left, int right) {
         // if left index is less than right index
         if (left < right) {
@@ -134,6 +142,11 @@ public class QuickSort {
             // recursively call quick-sort on [a(pivot + 1), ..., a(right)]
             quickSortLomuto(array, pivot + 1, right);
         }
+    }
+
+    @SortingAlgo
+    static public <T extends Comparable<T>> void randomizedQuickSortLomuto(T[] array) {
+        randomizedQuickSortLomuto(array, 0, array.length - 1);
     }
 
     /**
@@ -159,6 +172,12 @@ public class QuickSort {
         }
     }
 
+    @SortingAlgo
+    static public <T extends Comparable<T>> void quickSortHoare(T[] array) {
+        quickSortHoare(array, 0, array.length - 1);
+    }
+
     // todo, tends to be faster than classical quicksort for large datasets
-    static public void dualPivotQuickSort() {}
+    static public void dualPivotQuickSort() {
+    }
 }
