@@ -19,17 +19,17 @@ public class QueueTest {
     @ParameterizedTest(name = "testPutGetDequeueOrder on {0}")
     @MethodSource("loadAllQueueImplementations")
     void testPutGetDequeueOrder(Queue<Integer> queue) {
-        queue.put(1);
-        queue.put(2);
         queue.put(3);
+        queue.put(2);
+        queue.put(1);
 
-        Assertions.assertEquals(1, (int) queue.get());
+        Assertions.assertEquals(3, (int) queue.get());
         queue.dequeue();
 
         Assertions.assertEquals(2, (int) queue.get());
         queue.dequeue();
 
-        Assertions.assertEquals(3, (int) queue.get());
+        Assertions.assertEquals(1, (int) queue.get());
     }
 
     @ParameterizedTest(name = "testDequeueFromEmptyQueueThrows on {0}")
