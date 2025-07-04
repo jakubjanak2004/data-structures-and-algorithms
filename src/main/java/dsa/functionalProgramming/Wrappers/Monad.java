@@ -1,4 +1,4 @@
-package dsa.functionalProgramming;
+package dsa.functionalProgramming.Wrappers;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -11,7 +11,8 @@ import java.util.function.Supplier;
  *
  * @param <T> the type of the wrapped object
  */
-public class Monad<T> {
+// todo check that the monad really inherits from endofunctor, theory is right
+public class Monad<T> implements Endofunctor<T> {
     private static final Monad<?> EMPTY = new Monad<>();
     private final T value;
 
@@ -23,36 +24,37 @@ public class Monad<T> {
         this.value = value;
     }
 
-    public static <U> Monad<U> of(U value) {
-        if (value == null) throw new NullPointerException();
+    public static <R> Monad<R> of(R value) {
+        if (value == null) throw new NullPointerException("Value cannot be null");
         return new Monad<>(value);
     }
 
-    public static <U> Monad<U> ofNullable(U value) {
+    public static <R> Monad<R> ofNullable(R value) {
         if (value == null) return Monad.empty();
         return new Monad<>(value);
     }
 
     @SuppressWarnings("unchecked")
-    public static <U> Monad<U> empty() {
-        return (Monad<U>) EMPTY;
+    public static <R> Monad<R> empty() {
+        return (Monad<R>) EMPTY;
     }
 
-    public <U> Monad<U> map(Function<T, U> f) {
+    public <R> Monad<R> map(Function<? super T, ? extends R> f) {
         if (value == null) return empty();
         return new Monad<>(f.apply(value));
     }
 
-    public <U> Monad<U> flatMap(Function<T, Monad<U>> f) {
+    public <R> Monad<R> flatMap(Function<? super T, Monad<? extends R>> f) {
         if (value == null) return empty();
-        return f.apply(value);
+        R computedValue = f.apply(value).orElse(null);
+        return new Monad<>(computedValue);
     }
 
     public T get() {
         return value;
     }
 
-    public void ifPresent(Consumer<T> consumer) {
+    public void ifPresent(Consumer<? super T> consumer) {
         if (value == null) return;
         consumer.accept(value);
     }

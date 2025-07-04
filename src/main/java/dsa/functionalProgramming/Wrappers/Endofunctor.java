@@ -1,4 +1,4 @@
-package dsa.functionalProgramming;
+package dsa.functionalProgramming.Wrappers;
 
 import java.util.function.Function;
 
