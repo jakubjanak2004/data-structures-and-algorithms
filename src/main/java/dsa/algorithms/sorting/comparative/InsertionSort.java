@@ -1,5 +1,6 @@
 package dsa.algorithms.sorting.comparative;
 
+import dsa.algorithms.search.BinarySearch;
 import dsa.algorithms.sorting.SortingAlgo;
 
 public class InsertionSort {
@@ -35,8 +36,21 @@ public class InsertionSort {
         }
     }
 
-    // todo behaves like insertion sort but uses binary search for finding the place where to place key, therefore performs faster
-    static public <T extends Comparable<T>> void binarySort(int[] array) {
-        // todo
+    static public <T extends Comparable<T>> void binarySort(T[] array, int low, int high) {
+        int n = array.length;
+
+        for (int i = low; i <= high; i++) {
+            T key = array[i];
+
+            int j = BinarySearch.iterativeBinarySearch(array, key, 0, i);
+
+            System.arraycopy(array, j, array, j + 1, i - j);
+            array[j] = key;
+        }
+    }
+
+    @SortingAlgo
+    static public <T extends Comparable<T>> void binarySort(T[] array) {
+        binarySort(array, 0, array.length - 1);
     }
 }
