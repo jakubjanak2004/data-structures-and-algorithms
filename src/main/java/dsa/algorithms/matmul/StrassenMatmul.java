@@ -1,4 +1,4 @@
-package dsa.algorithms.matrix;
+package dsa.algorithms.matmul;
 
 import static dsa.algorithms.Utils.deepCopy2D;
 
