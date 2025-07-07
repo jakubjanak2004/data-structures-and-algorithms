@@ -77,7 +77,7 @@ public class HeapSort {
 
         // iterate from floor((n-1) / 2) to 0
         // note when indexing from 1 the calculation of the starting index of iteration is floor(n/2)
-        for (int i = (n - 1) / 2; i >= 0; i--) {
+        for (int i = (n - 2) / 2; i >= 0; i--) {
             // calling max-heapify on the iterated element and ending at the last element of the array
             maxHeapify(array, i, n - 1);
         }

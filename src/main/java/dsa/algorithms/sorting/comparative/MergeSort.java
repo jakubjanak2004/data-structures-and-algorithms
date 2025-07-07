@@ -6,6 +6,8 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class MergeSort {
+    public static final int MIN_ARRAY_SIZE = 16;
+
     /**
      * <h1>Merge method</h1>
      * <p>
@@ -54,14 +56,13 @@ public class MergeSort {
     }
 
     /**
-     *
      * @param array
      * @param aux
      * @param low
      * @param high
      * @param <T>
      */
-    private static <T extends Comparable<T>> void inPlaceMerge(T[] array, T[] aux, int low, int high) {
+    public static <T extends Comparable<T>> void inPlaceMerge(T[] array, T[] aux, int low, int high) {
         int mid = (low + high) / 2;
         int i1 = low;
         int i2 = mid + 1;
@@ -100,8 +101,9 @@ public class MergeSort {
      */
     @SortingAlgo(inplace = false)
     public static <T extends Comparable<T>> T[] mergeSort(T[] array) {
-        // base case: if array length is one just return the array
-        if (array.length <= 1) {
+        // base case: if array length is smaller or equal to the MIN_ARRAY_SIZE sort it and return
+        if (array.length <= MIN_ARRAY_SIZE) {
+            InsertionSort.binarySort(array);
             return array;
         }
 
@@ -120,6 +122,7 @@ public class MergeSort {
 
     /**
      * Inplace variant of the merge sort algorithms.
+     *
      * @param array
      * @param aux
      * @param low
@@ -127,11 +130,14 @@ public class MergeSort {
      * @param <T>
      */
     public static <T extends Comparable<T>> void inPlaceMergeSort(T[] array, T[] aux, int low, int high) {
-        // base case: if the low and high are the same we stop the recursion
-        if (low >= high) return;
+        // base case: if the difference between low and high is smaller or equal to MIN_ARRAY_SIZE sort it and return
+        if (high - low <= MIN_ARRAY_SIZE) {
+            InsertionSort.binarySort(array, low, high);
+            return;
+        }
 
         //  split the array [a1, a2, ..., an] by mid: floor(n / 2) into left: [a1, ..., a(mid)] and right: [a(mid + 1), ..., an]
-        int mid = (low + high) / 2;
+        int mid = low + (high - low) / 2;
 
         // call recursively merge sort on left and right arrays
         inPlaceMergeSort(array, aux, low, mid);
@@ -142,11 +148,12 @@ public class MergeSort {
 
         // copying aux to array from low to high
         // optimised copying
-        System.arraycopy(aux, low, array, low, high + 1 - low);
+        System.arraycopy(aux, low, array, low, high - low + 1);
     }
 
     /**
      * Is called by the test framework
+     *
      * @param array
      * @param <T>
      */

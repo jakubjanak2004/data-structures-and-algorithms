@@ -47,25 +47,28 @@ public class QuickSort {
      * @param right the ending index of the segment to partition
      * @return the final position of the pivot element
      */
-    private static <T extends Comparable<T>> int hoarePartition(T[] array, int left, int right) {
+    public static <T extends Comparable<T>> int hoarePartition(T[] array, int left, int right) {
         T pivot = array[left];
-        int i = left - 1, j = right + 1;
+        int i = left, j = right;
 
         while (true) {
             // Find leftmost element greater
             // than or equal to pivot
-            do {
-                i++;
-            } while (array[i].compareTo(pivot) < 0);
+            while (array[i].compareTo(pivot) < 0) i++;
 
             // Find rightmost element smaller
             // than or equal to pivot
-            do {
-                j--;
-            } while (array[j].compareTo(pivot) > 0);
+            while (array[j].compareTo(pivot) > 0) j--;
 
             // If two pointers met.
             if (i >= j) return j;
+
+            if (array[i].equals(array[j])) {
+                i++;
+                j--;
+                continue;
+            }
+
             swap(array, i, j);
         }
     }
@@ -98,7 +101,7 @@ public class QuickSort {
      * <p>
      * Recursively sorts the given array using the QuickSort algorithm with Lomuto partition scheme.
      * It selects a pivot element and partitions the array into elements less than and greater than the pivot,
-     * then recursively sorts the subarrays.
+     * then recursively sorts the sub-arrays.
      *
      * @param array the array to be sorted
      * @param left  the starting index of the segment to sort
@@ -122,16 +125,16 @@ public class QuickSort {
     }
 
 
-        /**
-         * <h1>Randomized QuickSort (Lomuto Partition)</h1>
-         * <p>
-         * Recursively sorts the given array using QuickSort and a randomized version of the Lomuto partition scheme.
-         * The pivot is chosen at random to improve performance on certain inputs.
-         *
-         * @param array the array to be sorted
-         * @param left  the starting index of the segment to sort
-         * @param right the ending index of the segment to sort
-         */
+    /**
+     * <h1>Randomized QuickSort (Lomuto Partition)</h1>
+     * <p>
+     * Recursively sorts the given array using QuickSort and a randomized version of the Lomuto partition scheme.
+     * The pivot is chosen at random to improve performance on certain inputs.
+     *
+     * @param array the array to be sorted
+     * @param left  the starting index of the segment to sort
+     * @param right the ending index of the segment to sort
+     */
     static public <T extends Comparable<T>> void randomizedQuickSortLomuto(T[] array, int left, int right) {
         // if left index is less than right index
         if (left < right) {
@@ -177,7 +180,72 @@ public class QuickSort {
         quickSortHoare(array, 0, array.length - 1);
     }
 
-    // todo, tends to be faster than classical quicksort for large datasets
-    static public void dualPivotQuickSort() {
+    private static <T extends Comparable<T>> int[] dualPivotPartition(T[] array, int left, int right) {
+        // if first element is bigger than last swap them
+        // now the first element is smaller than the last
+        if (array[left].compareTo(array[right]) > 0) swap(array, left, right);
+
+        // where '< p' region begins
+        int j = left + 1;
+        // where '> q' region ends
+        int g = right - 1;
+        // current scanning index
+        int k = left + 1;
+        // left pivot
+        T p = array[left];
+        // right pivot
+        T q = array[right];
+
+        // while the flags k and g are not swapped
+        while (k <= g) {
+
+            // if elements are less than the left pivot
+            if (array[k].compareTo(p) < 0) {
+                swap(array, k, j);
+                j++;
+            }
+
+            // if elements are greater than or equal
+            // to the right pivot
+            else if (array[k].compareTo(q) >= 0) {
+                // shift g to the first element that is <= than q
+                while (array[g].compareTo(q) > 0 && k < g) g--;
+
+                swap(array, k, g);
+                g--;
+
+                // if swapped element is less than p swap it
+                if (array[k].compareTo(p) < 0) {
+                    swap(array, k, j);
+                    j++;
+                }
+            }
+            k++;
+        }
+        // decrement j and g to match pivot positions
+        j--;
+        g++;
+
+        // bring pivots to their appropriate positions
+        swap(array, left, j);
+        swap(array, right, g);
+
+        // return the indexes of the pivots in an array of length 2
+        return new int[]{j, g};
+    }
+
+    static public <T extends Comparable<T>> void dualPivotQuickSort(T[] array, int left, int right) {
+        if (left < right) {
+            int[] pivots = dualPivotPartition(array, left, right);
+
+            dualPivotQuickSort(array, left, pivots[0] - 1);
+            dualPivotQuickSort(array, pivots[0], pivots[1] - 1);
+            dualPivotQuickSort(array, pivots[1], right);
+        }
+    }
+
+    @SortingAlgo
+    static public <T extends Comparable<T>> void dualPivotQuickSort(T[] array) {
+        dualPivotQuickSort(array, 0, array.length - 1);
     }
 }
