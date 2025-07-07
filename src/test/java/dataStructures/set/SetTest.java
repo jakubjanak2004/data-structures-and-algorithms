@@ -100,6 +100,7 @@ public class SetTest {
         for (Double value : randomList) {
             set.add(value);
         }
+        assertEquals(randomList.size(), set.size());
 
         for (Double value : randomList) {
             assertTrue(set.contains(value));

@@ -2,6 +2,8 @@ package algorithms;
 
 import dsa.algorithms.sorting.MaxValue;
 import dsa.algorithms.sorting.SortingAlgo;
+import dsa.algorithms.sorting.comparative.QuickSort;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicTest;
@@ -22,9 +24,8 @@ import static utils.TestHelpers.getIntegerObjectArray;
 
 // todo rename and delete the SortTest class
 public class SortTest {
-    private static final int MIN_NUM_ELEMENTS = 10;
-    private static final int MAX_NUM_ELEMENTS = 10_000;
-    private static final int NUMBER_OF_INSTANCES = 10;
+    private static final int MIN_NUM_ELEMENTS = 8;
+    private static final int MAX_NUM_ELEMENTS = 1 << 14;
     private static final int ELEMENT_MIN = 1;
     private static final int ELEMENT_MAX = 1000;
     Reflections reflections = new Reflections("dsa.algorithms.sorting", new MethodAnnotationsScanner());
@@ -32,10 +33,20 @@ public class SortTest {
 
     @BeforeEach
     void setup() {
-        int step = (MAX_NUM_ELEMENTS - MIN_NUM_ELEMENTS) / NUMBER_OF_INSTANCES;
-        for (int i = MIN_NUM_ELEMENTS; i <= MAX_NUM_ELEMENTS; i += step) {
+        for (int i = MIN_NUM_ELEMENTS; i <= MAX_NUM_ELEMENTS; i *= 2) {
             sortingProblemsList.add(getIntegerObjectArray(i, ELEMENT_MIN, ELEMENT_MAX));
         }
+    }
+
+    // todo check if needed
+    @Test
+    public void hoareTest() {
+        Integer[] i = new Integer[]{8, 5, 7, 9, 11, 6, 17, 18};
+        System.out.println(QuickSort.hoarePartition(i, 0, i.length - 1));
+        for (int element : i) {
+            System.out.print(element + " ");
+        }
+        // should be: 6, 5, 7, 8, 11, 9, 17, 18
     }
 
     @TestFactory

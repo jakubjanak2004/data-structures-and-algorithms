@@ -1,8 +1,8 @@
 package algorithms;
 
-import dsa.algorithms.matrix.ClassicMatmul;
-import dsa.algorithms.matrix.MatMul;
-import dsa.algorithms.matrix.StrassenMatmul;
+import dsa.algorithms.matmul.ClassicMatmul;
+import dsa.algorithms.matmul.MatMul;
+import dsa.algorithms.matmul.StrassenMatmul;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static dsa.algorithms.Utils.deepCopy2D;
-import static dsa.algorithms.matrix.StrassenMatmul.scalarMul;
+import static dsa.algorithms.matmul.StrassenMatmul.scalarMul;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
