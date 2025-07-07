@@ -1,6 +1,6 @@
 package dsa.dataStructures.tree.balancedTree;
 
-import dsa.dataStructures.tree.Node;
+import dsa.dataStructures.tree.GenericNode;
 
 /**
  * Implementation of an AVL Tree, a type of self-balancing binary search tree.
@@ -24,11 +24,10 @@ import dsa.dataStructures.tree.Node;
  *
  * @param <T> the type of elements stored in the tree; must be comparable to itself
  */
-public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
-    @Override
-    Node<T> leftRotation(Node<T> subtreeRoot) {
+public class AVLTree<T extends Comparable<T>> extends BalancedTree<T, AVLTree.AVLNode<T>> {
+    AVLNode<T> leftRotation(AVLNode<T> subtreeRoot) {
         if (subtreeRoot == null) return null;
-        Node<T> rightChild = subtreeRoot.getRight();
+        AVLNode<T> rightChild = subtreeRoot.getRight();
         if (rightChild == null) return subtreeRoot;
 
         subtreeRoot.setRight(rightChild.getLeft());
@@ -40,10 +39,9 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
         return rightChild;
     }
 
-    @Override
-    Node<T> rightRotation(Node<T> subtreeRoot) {
+    AVLNode<T> rightRotation(AVLNode<T> subtreeRoot) {
         if (subtreeRoot == null) return null;
-        Node<T> leftChild = subtreeRoot.getLeft();
+        AVLNode<T> leftChild = subtreeRoot.getLeft();
         if (leftChild == null) return subtreeRoot;
 
         subtreeRoot.setLeft(leftChild.getRight());
@@ -55,15 +53,13 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
         return leftChild;
     }
 
-    @Override
-    Node<T> leftRightRotation(Node<T> subtreeRoot) {
+    AVLNode<T> leftRightRotation(AVLNode<T> subtreeRoot) {
         if (subtreeRoot == null) return null;
         subtreeRoot.setLeft(leftRotation(subtreeRoot.getLeft()));
         return rightRotation(subtreeRoot);
     }
 
-    @Override
-    Node<T> rightLeftRotation(Node<T> subtreeRoot) {
+    AVLNode<T> rightLeftRotation(AVLNode<T> subtreeRoot) {
         if (subtreeRoot == null) return null;
         subtreeRoot.setRight(rightRotation(subtreeRoot.getRight()));
         return leftRotation(subtreeRoot);
@@ -74,10 +70,10 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
         root = addRecursive(root, element);
     }
 
-    protected Node<T> addRecursive(Node<T> node, T element) {
+    protected AVLNode<T> addRecursive(AVLNode<T> node, T element) {
         if (node == null) {
             size++;
-            return new Node<>(element);
+            return new AVLNode<>(element);
         }
 
         int comparison = element.compareTo(node.getValue());
@@ -89,7 +85,7 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
             return node;
         }
 
-        return balanceGraph(node);
+        return balanceSubtree(node);
     }
 
     @Override
@@ -97,10 +93,10 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
         root = addOrReplaceRecursive(root, element);
     }
 
-    protected Node<T> addOrReplaceRecursive(Node<T> node, T element) {
+    protected AVLNode<T> addOrReplaceRecursive(AVLNode<T> node, T element) {
         if (node == null) {
             size++;
-            return new Node<>(element);
+            return new AVLNode<>(element);
         }
 
         int comparison = element.compareTo(node.getValue());
@@ -113,17 +109,17 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
             return node;
         }
 
-        return balanceGraph(node);
+        return balanceSubtree(node);
     }
 
     @Override
-    protected Node<T> removeRecursive(Node<T> node, T element) {
-        Node<T> returnedNode = super.removeRecursive(node, element);
+    protected AVLNode<T> removeRecursive(AVLNode<T> node, T element) {
+        AVLNode<T> returnedNode = super.removeRecursive(node, element);
         if (returnedNode == null) return null;
-        return balanceGraph(returnedNode);
+        return balanceSubtree(returnedNode);
     }
 
-    private int balance(Node<T> node) {
+    private int balance(AVLNode<T> node) {
         return height(node.getLeft()) - height(node.getRight());
     }
 
@@ -145,7 +141,7 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
      * @param node the root of the subtree to balance; may be {@code null}
      * @return the new root of the balanced subtree (after any necessary rotations)
      */
-    private Node<T> balanceGraph(Node<T> node) {
+    private AVLNode<T> balanceSubtree(AVLNode<T> node) {
         updateHeightForNode(node);
 
         int balance = balance(node);
@@ -187,7 +183,7 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
      * @param node the node whose height is requested; may be {@code null}
      * @return the height of the node, or {@code -1} if the node is {@code null}
      */
-    private int height(Node<T> node) {
+    private int height(AVLNode<T> node) {
         return node == null ? -1 : node.getHeight();
     }
 
@@ -199,8 +195,14 @@ public class AVLTree<T extends Comparable<T>> extends BalancedTree<T> {
      *
      * @param node the node whose height needs to be updated; if {@code null}, no action is taken
      */
-    private void updateHeightForNode(Node<T> node) {
+    private void updateHeightForNode(AVLNode<T> node) {
         if (node == null) return;
         node.setHeight(Math.max(height(node.getLeft()), height(node.getRight())) + 1);
+    }
+
+    protected static class AVLNode<T extends Comparable<T>> extends GenericNode<T, AVLNode<T>> {
+        public AVLNode(T value) {
+            super(value);
+        }
     }
 }
