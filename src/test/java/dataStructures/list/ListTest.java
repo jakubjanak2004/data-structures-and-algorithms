@@ -189,7 +189,7 @@ public class ListTest {
         linkedList.insert(3);
 
         linkedList.first();
-        linkedList.insert(0);
+        linkedList.insert(0, true);
 
         linkedList.first();
         Assertions.assertEquals(0, linkedList.read());
@@ -211,7 +211,7 @@ public class ListTest {
         linkedList.first();
         linkedList.next();
         linkedList.next();
-        linkedList.insert(0);
+        linkedList.insert(0, true);
 
         linkedList.first();
         Assertions.assertEquals(1, linkedList.read());
@@ -231,7 +231,6 @@ public class ListTest {
         linkedList.insert(3);
 
         linkedList.last();
-        linkedList.next();
         linkedList.insert(0);
 
         linkedList.first();

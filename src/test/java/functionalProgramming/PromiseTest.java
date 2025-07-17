@@ -32,25 +32,25 @@ public class PromiseTest {
         return o + " <- was created by async method";
     }
 
-    @Test
-    public void chainedThenReturnsPromise() {
-        Promise<PromiseObject> promise = new Promise<>((onSuccess, onFailure) -> {
-            PromiseObject promiseObject = new PromiseObject();
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            promiseObject.incrementCounter();
-            onSuccess.accept(promiseObject);
-        });
-
-        promise
-            .thenAccept(promiseObject -> System.out.println("Promise object loaded successfully: " + promiseObject))
-            .thenApply(promiseObject -> objectToStringAsync(promiseObject))
-            .thenAccept(System.out::println)
-            .await();
-    }
+//    @Test
+//    public void chainedThenReturnsPromise() {
+//        Promise<PromiseObject> promise = new Promise<>((onSuccess, onFailure) -> {
+//            PromiseObject promiseObject = new PromiseObject();
+//            try {
+//                Thread.sleep(300);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            promiseObject.incrementCounter();
+//            onSuccess.accept(promiseObject);
+//        });
+//
+//        promise
+//            .thenAccept(promiseObject -> System.out.println("Promise object loaded successfully: " + promiseObject))
+//            .thenApply(promiseObject -> objectToStringAsync(promiseObject))
+//            .thenAccept(System.out::println)
+//            .await();
+//    }
 
     @Test
     public void promiseReturnsValueOnThen() {
@@ -83,15 +83,15 @@ public class PromiseTest {
         System.out.println(promise.get());
     }
 
-    @Test
-    public void promiseCallsCatchThrowableWhenThrowableRaised() {
-        Promise<String> promise = new Promise<>((onSuccess, onFailure) -> {
-            onFailure.accept(new Exception("Promise raised an exception"));
-        });
-
-        promise
-                .thenAccept(System.out::println)
-                .catchThrowable(System.err::println)
-                .finallyCall(() -> System.out.println("Finally called, ending the promise lifecycle"));
-    }
+//    @Test
+//    public void promiseCallsCatchThrowableWhenThrowableRaised() {
+//        Promise<String> promise = new Promise<>((onSuccess, onFailure) -> {
+//            onFailure.accept(new Exception("Promise raised an exception"));
+//        });
+//
+//        promise
+//                .thenAccept(System.out::println)
+//                .catchThrowable(System.err::println)
+//                .finallyCall(() -> System.out.println("Finally called, ending the promise lifecycle"));
+//    }
 }

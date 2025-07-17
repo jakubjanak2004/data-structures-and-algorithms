@@ -2,6 +2,7 @@ package dsa.dataStructures.list.circularLinkedList;
 
 import dsa.dataStructures.list.LinkedList;
 import dsa.dataStructures.list.ListNode;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -15,18 +16,23 @@ public class CircularDoublyLinkedList<T> extends LinkedList<T> {
     }
 
     @Override
-    public void insert(T t) {
+    public void insert(T t, boolean before) {
         ListNode<T> help = new ListNode<>(t);
         if (dummyHead.getNextNode() == null) {
             dummyHead.setPrevNode(help);
             dummyHead.setNextNode(help);
             help.setPrevNode(dummyHead);
             help.setNextNode(dummyHead);
+        } else if (before) {
+            help.setNextNode(point);
+            help.setPrevNode(point.getPrevNode());
+            point.getPrevNode().setNextNode(help);
+            point.setPrevNode(help);
         } else {
-            help.setPrevNode(dummyHead.getPrevNode());
-            dummyHead.getPrevNode().setNextNode(help);
-            dummyHead.setPrevNode(help);
-            help.setNextNode(dummyHead);
+            help.setNextNode(point.getNextNode());
+            point.getNextNode().setPrevNode(help);
+            point.setNextNode(help);
+            help.setPrevNode(point);
         }
         point = help;
         len++;
@@ -89,7 +95,7 @@ public class CircularDoublyLinkedList<T> extends LinkedList<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public @NotNull Iterator<T> iterator() {
         return new CircularLinkedListIterator();
     }
 

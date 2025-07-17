@@ -7,9 +7,9 @@ import java.util.Objects;
 public class SinglyLinkedList<T> extends LinearLinkedList<T> {
 
     @Override
-    public void insert(T t) {
+    public void insert(T t, boolean before) {
         ListNode<T> help = new ListNode<>();
-        if (point == null) {
+        if (head == null || point == null) {
             help.setValue(t);
             if (tail == null) {
                 head = help;
@@ -17,7 +17,8 @@ public class SinglyLinkedList<T> extends LinearLinkedList<T> {
                 tail.setNextNode(help);
             }
             tail = help;
-        } else {
+        } else if (before) {
+            // prepend before point
             help.setValue(point.getValue());
             if (point.getNextNode() == null) {
                 tail = help;
@@ -26,8 +27,19 @@ public class SinglyLinkedList<T> extends LinearLinkedList<T> {
             }
             point.setNextNode(help);
             point.setValue(t);
-            point = help;
+        } else {
+            // append after point
+            help.setValue(t);
+            help.setPrevNode(point);
+            if (point.getNextNode() == null) {
+                tail = help;
+            } else {
+                point.getNextNode().setPrevNode(help);
+                help.setNextNode(point.getNextNode());
+            }
+            point.setNextNode(help);
         }
+        point = help;
         len++;
     }
 

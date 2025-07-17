@@ -5,8 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public abstract class BSTree<T extends Comparable<T>> implements Tree<T> {
-    protected Node<T> root;
+public abstract class BSTree<T extends Comparable<T>, N extends GenericNode<T, N>> implements GenericTree<T, N>, Tree<T>{
+    protected N root;
     protected int size;
 
     @Override
@@ -16,11 +16,11 @@ public abstract class BSTree<T extends Comparable<T>> implements Tree<T> {
 
     @Override
     public T get(T element) {
-        Node<T> found = getNode(root, element);
+        N found = getNode(root, element);
         return found == null ? null : found.getValue();
     }
 
-    private Node<T> getNode(Node<T> node, T element) {
+    protected N getNode(N node, T element) {
         if (node == null) return null;
 
         int comparison = element.compareTo(node.getValue());
@@ -46,7 +46,7 @@ public abstract class BSTree<T extends Comparable<T>> implements Tree<T> {
      * @param element the element to remove
      * @return the new root of the subtree
      */
-    protected Node<T> removeRecursive(Node<T> node, T element) {
+    protected N removeRecursive(N node, T element) {
         if (node == null) return null;
 
         int comparison = element.compareTo(node.getValue());
@@ -56,33 +56,38 @@ public abstract class BSTree<T extends Comparable<T>> implements Tree<T> {
         } else if (comparison > 0) {
             node.setRight(removeRecursive(node.getRight(), element));
         } else {
-            size--;
-            // node to delete found
-            if (node.getLeft() == null) return node.getRight();
-            if (node.getRight() == null) return node.getLeft();
-
-            // node with two children: get smallest from right subtree
-            Node<T> minRight = treeMin(node.getRight());
-            node.setValue(minRight.getValue());
-            node.setRight(removeRecursive(node.getRight(), minRight.getValue()));
+            return removeNode(node);
         }
+        return node;
+    }
+
+    protected N removeNode(N node) {
+        size--;
+        // node to delete found
+        if (node.getLeft() == null) return node.getRight();
+        if (node.getRight() == null) return node.getLeft();
+
+        // node with two children: get smallest from right subtree
+        N minRight = treeMin(node.getRight());
+        node.setValue(minRight.getValue());
+        node.setRight(removeRecursive(node.getRight(), minRight.getValue()));
         return node;
     }
 
     @Override
     public T min() {
-        Node<T> minNode = treeMin(root);
+        N minNode = treeMin(root);
         return minNode == null ? null : minNode.getValue();
     }
 
     @Override
     public T max() {
-        Node<T> maxNode = treeMax(root);
+        N maxNode = treeMax(root);
         return maxNode == null ? null : maxNode.getValue();
     }
 
     @Override
-    public Node<T> treeMin(Node<T> node) {
+    public N treeMin(N node) {
         if (node == null) return null;
         while (node.getLeft() != null) {
             node = node.getLeft();
@@ -91,7 +96,7 @@ public abstract class BSTree<T extends Comparable<T>> implements Tree<T> {
     }
 
     @Override
-    public Node<T> treeMax(Node<T> node) {
+    public N treeMax(N node) {
         if (node == null) return null;
         while (node.getRight() != null) {
             node = node.getRight();
@@ -100,10 +105,10 @@ public abstract class BSTree<T extends Comparable<T>> implements Tree<T> {
     }
 
     @Override
-    public Node<T> treeSuccessor(Node<T> node) {
+    public N treeSuccessor(N node) {
         if (node == null) return null;
         if (node.getRight() != null) return treeMin(node.getRight());
-        Node<T> parentNode = node.getParent();
+        N parentNode = node.getParent();
         while (parentNode != null && node == parentNode.getRight()) {
             node = parentNode;
             parentNode = node.getParent();
@@ -118,7 +123,7 @@ public abstract class BSTree<T extends Comparable<T>> implements Tree<T> {
     }
 
     private class BSTreeIterator implements Iterator<T> {
-        Node<T> current = root;
+        N current = root;
 
         @Override
         public boolean hasNext() {

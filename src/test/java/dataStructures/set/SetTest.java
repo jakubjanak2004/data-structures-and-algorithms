@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utils.TestHelpers.getInstantiatedChildrenForClass;
 
 public class SetTest {
-    private static Random random = new Random();
-    private static List<Double> randomList = new ArrayList<>();
+    private static final Random random = new Random();
+    private static final List<Double> randomList = new ArrayList<>();
 
     @BeforeAll
     public static void setUp() {
@@ -61,6 +61,20 @@ public class SetTest {
         set.add(5.5); // duplicate add
         assertTrue(set.contains(5.5));
         assertEquals(2, set.size());
+    }
+
+    @ParameterizedTest(name = "testAddAndReplace on: {1}")
+    @MethodSource("loadAllHashTableChildren")
+    public void testAddOrReplace(Set<KeyValue> set, String testedClassName) {
+        assertEquals(0, set.size());
+
+        KeyValue first = new KeyValue(1, 2);
+        KeyValue second = new KeyValue(1, 3);
+
+        set.add(first);
+        set.addOrReplace(second);
+
+        assertEquals(3, set.get(first).getValue());
     }
 
     @ParameterizedTest(name = "testRemove on: {1}")

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class StackList<T extends Comparable<T>> implements List<T>, Iterable<T> {
+public class StackList<T extends Comparable<T>> implements List<T> {
     private final Stack<T> leftStack = new ListStack<>();
     private final Stack<T> rightStack = new ListStack<>();
 
@@ -56,8 +56,15 @@ public class StackList<T extends Comparable<T>> implements List<T>, Iterable<T> 
     }
 
     @Override
-    public void insert(T t) {
-        leftStack.push(t);
+    public void insert(T t, boolean before) {
+        if (before && !leftStack.isEmpty()) {
+            T popped = leftStack.top();
+            leftStack.pop();
+            leftStack.push(t);
+            leftStack.push(popped);
+        } else {
+            leftStack.push(t);
+        }
     }
 
     @Override

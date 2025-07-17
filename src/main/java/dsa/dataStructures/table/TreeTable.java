@@ -1,6 +1,6 @@
 package dsa.dataStructures.table;
 
-import dsa.dataStructures.set.sortedSet.treeSet.TreeSet;
+import dsa.dataStructures.set.sortedSet.TreeSet;
 import org.jetbrains.annotations.NotNull;
 
 public class TreeTable<K extends Comparable<K>, V> implements Table<K, V> {

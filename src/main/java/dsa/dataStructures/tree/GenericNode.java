@@ -1,42 +1,43 @@
 package dsa.dataStructures.tree;
 
-public class Node<T extends Comparable<T>> {
-    private Node<T> parent;
-    private Node<T> left;
-    private Node<T> right;
+public abstract class GenericNode<T extends Comparable<T>, N extends GenericNode<T, N>> {
+    private N parent;
+    private N left;
+    private N right;
     private T value;
+    // todo move into avl node
     private int height;
 
-    public Node(T value) {
+    public GenericNode(T value) {
         this.value = value;
     }
 
-    public Node<T> getParent() {
+    public N getParent() {
         return parent;
     }
 
-    public void setParent(Node<T> parent) {
+    public void setParent(N parent) {
         this.parent = parent;
     }
 
-    public Node<T> getLeft() {
+    public N getLeft() {
         return left;
     }
 
-    public void setLeft(Node<T> left) {
+    public void setLeft(N left) {
         this.left = left;
         if (left == null) return;
-        left.setParent(this);
+        left.setParent((N) this);
     }
 
-    public Node<T> getRight() {
+    public N getRight() {
         return right;
     }
 
-    public void setRight(Node<T> right) {
+    public void setRight(N right) {
         this.right = right;
         if (right == null) return;
-        right.setParent(this);
+        right.setParent((N) this);
     }
 
     public T getValue() {

@@ -13,7 +13,11 @@ public interface List<T> extends Iterable<T>{
 
     T get(T t);
 
-    void insert(T t);
+    void insert(T t, boolean before);
+
+    default void insert(T t) {
+        insert(t, false);
+    }
 
     void delete();
 

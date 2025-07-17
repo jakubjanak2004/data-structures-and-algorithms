@@ -5,26 +5,43 @@ import dsa.dataStructures.list.ListNode;
 public class DoublyLinkedList<T> extends LinearLinkedList<T> {
 
     @Override
-    public void insert(T t) {
-        ListNode<T> help = new ListNode<>(t);
-        if (point == null) {
+    public void insert(T t, boolean before) {
+        ListNode<T> help = new ListNode<>();
+        if (head == null || point == null) {
+            help.setValue(t);
             if (tail == null) {
                 head = help;
             } else {
-                help.setPrevNode(tail);
                 tail.setNextNode(help);
+                help.setPrevNode(tail);
             }
             tail = help;
-        } else {
-            // setting the prev and next node
-            help.setNextNode(point.getNextNode());
-            point.getNextNode().setPrevNode(help);
-            // setting the prev and next node
-            point.setValue(t);
+        } else if (before) {
+            // prepend before element
+            help.setValue(point.getValue());
+            if (point.getNextNode() == null) {
+                tail = help;
+            } else {
+                help.setNextNode(point.getNextNode());
+                point.getNextNode().setPrevNode(help);
+            }
             point.setNextNode(help);
             help.setPrevNode(point);
-            point = help;
+            point.setValue(t);
+        } else {
+            // append after point
+            help.setValue(t);
+            help.setPrevNode(point);
+            if (point.getNextNode() == null) {
+                tail = help;
+            } else {
+                point.getNextNode().setPrevNode(help);
+                help.setNextNode(point.getNextNode());
+            }
+            point.setNextNode(help);
+            help.setPrevNode(point);
         }
+        point = help;
         len++;
     }
 

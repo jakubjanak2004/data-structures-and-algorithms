@@ -31,9 +31,10 @@ public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
             }
             sortedLinkedList.next();
         }
-        sortedLinkedList.insert(element);
+        sortedLinkedList.insert(element, true);
     }
 
+    // todo test add or replace
     @Override
     public void addOrReplace(T element) {
         sortedLinkedList.first();
@@ -51,7 +52,6 @@ public class SortedListSet<T extends Comparable<T>> extends SortedSet<T> {
             sortedLinkedList.next();
         }
         sortedLinkedList.insert(element);
-
     }
 
     @Override

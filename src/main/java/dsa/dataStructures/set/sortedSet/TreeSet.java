@@ -1,8 +1,6 @@
-package dsa.dataStructures.set.sortedSet.treeSet;
+package dsa.dataStructures.set.sortedSet;
 
-import dsa.dataStructures.set.sortedSet.SortedSet;
 import dsa.dataStructures.tree.Tree;
-import dsa.dataStructures.tree.UnbalancedBSTree;
 import dsa.dataStructures.tree.balancedTree.AVLTree;
 import org.jetbrains.annotations.NotNull;
 
