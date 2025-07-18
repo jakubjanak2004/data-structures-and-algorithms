@@ -1,6 +1,6 @@
 package functionalProgramming;
 
-import dsa.functionalProgramming.Wrappers.Monad;
+import dsa.functionalProgramming.Monad;
 import org.junit.Test;
 
 import java.util.function.Consumer;

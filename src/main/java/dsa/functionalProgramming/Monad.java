@@ -1,4 +1,4 @@
-package dsa.functionalProgramming.Wrappers;
+package dsa.functionalProgramming;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -11,8 +11,7 @@ import java.util.function.Supplier;
  *
  * @param <T> the type of the wrapped object
  */
-// todo check that the monad really inherits from endofunctor, theory is right
-public class Monad<T> implements Endofunctor<T> {
+public class Monad<T> {
     private static final Monad<?> EMPTY = new Monad<>();
     private final T value;
 
