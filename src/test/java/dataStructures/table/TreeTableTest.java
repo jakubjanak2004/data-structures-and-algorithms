@@ -1,33 +1,32 @@
 package dataStructures.table;
 
-import dsa.dataStructures.set.hashSet.HashSet;
 import dsa.dataStructures.set.sortedSet.TreeSet;
-import dsa.dataStructures.table.HashTable;
 import dsa.dataStructures.table.Table;
 import dsa.dataStructures.table.TreeTable;
 import dsa.dataStructures.tree.Tree;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.reflections.Reflections;
-import org.reflections.scanners.MethodAnnotationsScanner;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static utils.TestHelpers.findAllNonAbstractChildrenForClass;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utils.TestHelpers.getInstantiatedChildrenForClass;
 
-class HashTableTest {
-    static Reflections reflections = new Reflections("dsa.dataStructures");
-    public static Stream<Arguments> loadAllHashSetChildren() {
-        return getInstantiatedChildrenForClass("dsa.dataStructures.set", HashSet.class);
+public class TreeTableTest {
+    public static Stream<Arguments> loadAllTreeChildren() {
+        return getInstantiatedChildrenForClass("dsa.dataStructures.tree", Tree.class);
     }
 
-    @ParameterizedTest(name = "testPutAndContains with hashSet: {1}")
-    @MethodSource("loadAllHashSetChildren")
-    void testPutAndContains(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
-        HashTable<String, Integer> table = new HashTable<>(hashSet);
+    @ParameterizedTest(name = "testPutAndContains with TreeTable with: {1}")
+    @MethodSource("loadAllTreeChildren")
+    void testPutAndContains(Tree<TreeTable.TreePair<String, Integer>> tree, String insertedHashSetName) {
+        Table<String, Integer> table = new TreeTable<>(
+                new TreeSet<>(tree)
+        );
         assertFalse(table.containsKey("apple"));
         assertEquals(0, table.size());
 
@@ -43,9 +42,11 @@ class HashTableTest {
     }
 
     @ParameterizedTest(name = "testGetExistingKey with hashSet: {1}")
-    @MethodSource("loadAllHashSetChildren")
-    void testGetExistingKey(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
-        HashTable<String, Integer> table = new HashTable<>(hashSet);
+    @MethodSource("loadAllTreeChildren")
+    void testGetExistingKey(Tree<TreeTable.TreePair<String, Integer>> tree, String insertedHashSetName) {
+        Table<String, Integer> table = new TreeTable<>(
+                new TreeSet<>(tree)
+        );
         table.put("dog", 5);
         table.put("cat", 7);
 
@@ -54,9 +55,11 @@ class HashTableTest {
     }
 
     @ParameterizedTest(name = "testGetNonExistingKey with hashSet: {1}")
-    @MethodSource("loadAllHashSetChildren")
-    void testGetNonExistingKey(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
-        HashTable<String, Integer> table = new HashTable<>(hashSet);
+    @MethodSource("loadAllTreeChildren")
+    void testGetNonExistingKey(Tree<TreeTable.TreePair<String, Integer>> tree, String insertedHashSetName) {
+        Table<String, Integer> table = new TreeTable<>(
+                new TreeSet<>(tree)
+        );
 
         table.put("house", 10);
 
@@ -65,9 +68,11 @@ class HashTableTest {
     }
 
     @ParameterizedTest(name = "testOverwriteValue with hashSet: {1}")
-    @MethodSource("loadAllHashSetChildren")
-    void testOverwriteValue(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
-        HashTable<String, Integer> table = new HashTable<>(hashSet);
+    @MethodSource("loadAllTreeChildren")
+    void testOverwriteValue(Tree<TreeTable.TreePair<String, Integer>> tree, String insertedHashSetName) {
+        Table<String, Integer> table = new TreeTable<>(
+                new TreeSet<>(tree)
+        );
 
         table.put("key", 10);
         assertTrue(table.containsKey("key"));
@@ -81,9 +86,11 @@ class HashTableTest {
     }
 
     @ParameterizedTest(name = "testRemoveExistingKey with hashSet: {1}")
-    @MethodSource("loadAllHashSetChildren")
-    void testRemoveExistingKey(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
-        HashTable<String, Integer> table = new HashTable<>(hashSet);
+    @MethodSource("loadAllTreeChildren")
+    void testRemoveExistingKey(Tree<TreeTable.TreePair<String, Integer>> tree, String insertedHashSetName) {
+        Table<String, Integer> table = new TreeTable<>(
+                new TreeSet<>(tree)
+        );
 
         table.put("one", 1);
         table.put("two", 2);
@@ -100,9 +107,11 @@ class HashTableTest {
     }
 
     @ParameterizedTest(name = "testRemoveNonExistingKey with hashSet: {1}")
-    @MethodSource("loadAllHashSetChildren")
-    void testRemoveNonExistingKey(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
-        HashTable<String, Integer> table = new HashTable<>(hashSet);
+    @MethodSource("loadAllTreeChildren")
+    void testRemoveNonExistingKey(Tree<TreeTable.TreePair<String, Integer>> tree, String insertedHashSetName) {
+        Table<String, Integer> table = new TreeTable<>(
+                new TreeSet<>(tree)
+        );
 
         table.put("existing", 123);
 
@@ -116,9 +125,11 @@ class HashTableTest {
     }
 
     @ParameterizedTest(name = "testMultipleOperations with hashSet: {1}")
-    @MethodSource("loadAllHashSetChildren")
-    void testMultipleOperations(HashSet<Table.Pair<String, Integer>> hashSet, String insertedHashSetName) {
-        HashTable<String, Integer> table = new HashTable<>(hashSet);
+    @MethodSource("loadAllTreeChildren")
+    void testMultipleOperations(Tree<TreeTable.TreePair<String, Integer>> tree, String insertedHashSetName) {
+        Table<String, Integer> table = new TreeTable<>(
+                new TreeSet<>(tree)
+        );
 
         table.put("a", 1);
         table.put("b", 2);
@@ -142,10 +153,12 @@ class HashTableTest {
     }
 
     @ParameterizedTest(name = "testBigInsertions with hashSet: {1}")
-    @MethodSource("loadAllHashSetChildren")
-    void testPerformanceForBigInsertions(HashSet<Table.Pair<Integer, Integer>> hashSet, String insertedHashSetName) {
-        HashTable<Integer, Integer> table = new HashTable<>(hashSet);
-        int maximalElement = 1000000;
+    @MethodSource("loadAllTreeChildren")
+    void testPerformanceForBigInsertions(Tree<TreeTable.TreePair<Integer, Integer>> tree, String insertedHashSetName) {
+        Table<Integer, Integer> table = new TreeTable<>(
+                new TreeSet<>(tree)
+        );
+        int maximalElement = 10_000;
         for (int i = 0; i < maximalElement; i++) {
             table.put(i, i+1);
         }

@@ -16,7 +16,7 @@ public class CircularDoublyLinkedListTest {
     }
 
     @Test
-    public void testCircularBehavior() {
+    public void nextOverflowsToFirstElementAtEnd() {
         list.insert(10);
         list.insert(20);
         list.insert(30);
@@ -41,7 +41,7 @@ public class CircularDoublyLinkedListTest {
     }
 
     @Test
-    public void testCircularNavigation() {
+    public void prevOverflowsToPreviousElementAtBeginning() {
         list.insert(1);
         list.insert(2);
         list.insert(3);

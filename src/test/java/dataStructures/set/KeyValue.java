@@ -3,7 +3,7 @@ package dataStructures.set;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Dummy object to see if the add or replace method really replaces the object added for the second time
+ * Dummy object to see if the add or replace method really replaces the object added for the second time with different value set.
  */
 public class KeyValue implements Comparable<KeyValue> {
     int key;

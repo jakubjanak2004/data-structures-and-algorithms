@@ -1,8 +1,6 @@
 package dataStructures.list;
 
 import dsa.dataStructures.list.List;
-import dsa.dataStructures.list.circularLinkedList.CircularDoublyLinkedList;
-import dsa.dataStructures.list.stackList.StackList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,8 +10,6 @@ import java.util.stream.Stream;
 
 import static utils.TestHelpers.getInstantiatedChildrenForClass;
 
-// todo I had to add if statements into the tests, maybe split into different tests
-// todo there are three tests with those if statements
 public class ListTest {
 
     public static Stream<Arguments> loadAllLinkedListChildren() {
@@ -30,7 +26,7 @@ public class ListTest {
 
     @ParameterizedTest(name = "testInsertFirstElement on: {1}")
     @MethodSource("loadAllLinkedListChildren")
-    void testInsertFirstElement(List<Integer> linkedList, String testedClassName) {
+    void insertOneElement(List<Integer> linkedList, String testedClassName) {
         linkedList.insert(10);
         Assertions.assertFalse(linkedList.empty());
         Assertions.assertEquals(1, linkedList.size(), linkedList.getClass().getSimpleName());
@@ -39,7 +35,7 @@ public class ListTest {
 
     @ParameterizedTest(name = "testInsertMultipleElements on: {1}")
     @MethodSource("loadAllLinkedListChildren")
-    void testInsertMultipleElements(List<Integer> linkedList, String testedClassName) {
+    void insertMultipleElements(List<Integer> linkedList, String testedClassName) {
         linkedList.insert(1);
         linkedList.insert(2);
         linkedList.insert(3);
@@ -54,21 +50,11 @@ public class ListTest {
 
         linkedList.next();
         Assertions.assertEquals(3, (int) linkedList.read(), linkedList.getClass().getSimpleName());
-
-        linkedList.next();
-
-        if (linkedList instanceof CircularDoublyLinkedList) {
-            Assertions.assertEquals(1, (int) linkedList.read(), linkedList.getClass().getSimpleName());
-        } else if (linkedList instanceof StackList) {
-            Assertions.assertEquals(3, (int) linkedList.read(), linkedList.getClass().getSimpleName());
-        } else {
-            Assertions.assertNull(linkedList.read(), linkedList.getClass().getSimpleName());
-        }
     }
 
     @ParameterizedTest(name = "testDeleteMiddleElement on: {1}")
     @MethodSource("loadAllLinkedListChildren")
-    void testDeleteMiddleElement(List<Integer> linkedList, String testedClassName) {
+    void deleteMiddleElement(List<Integer> linkedList, String testedClassName) {
         linkedList.insert(1);
         linkedList.insert(2);
         linkedList.insert(3);
@@ -83,21 +69,11 @@ public class ListTest {
         Assertions.assertEquals(1, (int) linkedList.read(), linkedList.getClass().getSimpleName());
         linkedList.next();
         Assertions.assertEquals(3, (int) linkedList.read(), linkedList.getClass().getSimpleName());
-
-        linkedList.next();
-
-        if (linkedList instanceof CircularDoublyLinkedList) {
-            Assertions.assertEquals(1, (int) linkedList.read(), linkedList.getClass().getSimpleName());
-        } else if (linkedList instanceof StackList) {
-            Assertions.assertEquals(3, (int) linkedList.read(), linkedList.getClass().getSimpleName());
-        } else {
-            Assertions.assertNull(linkedList.read(), linkedList.getClass().getSimpleName());
-        }
     }
 
     @ParameterizedTest(name = "testDeleteLastElement on: {1}")
     @MethodSource("loadAllLinkedListChildren")
-    void testDeleteLastElement(List<Integer> linkedList, String testedClassName) {
+    void deleteLastElement(List<Integer> linkedList, String testedClassName) {
         linkedList.insert(1);
         linkedList.insert(2);
         linkedList.insert(3);
@@ -112,21 +88,11 @@ public class ListTest {
         linkedList.first();
         linkedList.next();
         Assertions.assertEquals(2, (int) linkedList.read(), linkedList.getClass().getSimpleName());
-
-        linkedList.next();
-
-        if (linkedList instanceof CircularDoublyLinkedList) {
-            Assertions.assertEquals(1, (int) linkedList.read(), linkedList.getClass().getSimpleName());
-        } else if (linkedList instanceof StackList<Integer>) {
-            Assertions.assertEquals(2, (int) linkedList.read(), linkedList.getClass().getSimpleName());
-        } else {
-            Assertions.assertNull(linkedList.read(), linkedList.getClass().getSimpleName());
-        }
     }
 
     @ParameterizedTest(name = "testDeleteOnlyElement on: {1}")
     @MethodSource("loadAllLinkedListChildren")
-    void testDeleteOnlyElement(List<Integer> linkedList, String testedClassName) {
+    void deleteWhenOnly1ElementIsPresent(List<Integer> linkedList, String testedClassName) {
         linkedList.insert(42);
 
         linkedList.first();
@@ -138,7 +104,7 @@ public class ListTest {
 
     @ParameterizedTest(name = "testPrevMethod on: {1}")
     @MethodSource("loadAllLinkedListChildren")
-    void testPrevMethod(List<Integer> linkedList, String testedClassName) {
+    void prevMovesBack(List<Integer> linkedList, String testedClassName) {
         linkedList.insert(1);
         linkedList.insert(2);
         linkedList.insert(3);
@@ -156,7 +122,7 @@ public class ListTest {
 
     @ParameterizedTest(name = "testFirstAndLast on: {1}")
     @MethodSource("loadAllLinkedListChildren")
-    void testFirstAndLast(List<Integer> linkedList, String testedClassName) {
+    void firstAndLastPointToFirstAndLastElementsAdded(List<Integer> linkedList, String testedClassName) {
         linkedList.insert(5);
         linkedList.insert(10);
         linkedList.insert(15);
@@ -167,7 +133,7 @@ public class ListTest {
 
     @ParameterizedTest(name = "testLinkedListIterator on: {1}")
     @MethodSource("loadAllLinkedListChildren")
-    void testLinkedListIterator(List<Integer> linkedList, String testedClassName) {
+    void iteratorIteratesOverAllElements(List<Integer> linkedList, String testedClassName) {
         int[] values = {1, 2, 3, 4};
         for (int value : values) {
             linkedList.insert(value);

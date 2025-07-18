@@ -72,6 +72,7 @@ public class SetTest {
         KeyValue second = new KeyValue(1, 3);
 
         set.add(first);
+        // should replace the first with the second
         set.addOrReplace(second);
 
         assertEquals(3, set.get(first).getValue());
@@ -95,7 +96,7 @@ public class SetTest {
 
     @ParameterizedTest(name = "testNegativeHashCodes on: {1}")
     @MethodSource("loadAllHashTableChildren")
-    public void testNegativeHashCodes(Set<Double> set, String testedClassName) {
+    public void addNegativeNumbers(Set<Double> set, String testedClassName) {
         set.add(-123D);
         assertTrue(set.contains(-123D));
 
@@ -103,19 +104,16 @@ public class SetTest {
         assertFalse(set.contains(-123D));
     }
 
-    /**
-     * Performance test for all Set children
-     * @param set
-     * @param testedClassName
-     */
     @ParameterizedTest(name = "testPerformance on: {1}")
     @MethodSource("loadAllHashTableChildren")
     public void testPerformance(Set<Double> set, String testedClassName) {
+        // adding values
         for (Double value : randomList) {
             set.add(value);
         }
         assertEquals(randomList.size(), set.size());
 
+        // checking if the set contains all values
         for (Double value : randomList) {
             assertTrue(set.contains(value));
         }

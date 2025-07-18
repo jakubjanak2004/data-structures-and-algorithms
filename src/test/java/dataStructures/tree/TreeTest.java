@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-// todo, probably decide whether to merge testing with tree set cause it is just an interface above the BSTrees
 // todo make sure the trees works for doubles as well, now it does not, convert the comparison to double not integer
 public class TreeTest {
     private final Reflections reflections = new Reflections("dsa.dataStructures.tree");
@@ -24,10 +23,10 @@ public class TreeTest {
     public Stream<DynamicTest> generateTreeTests() {
         return reflections.getSubTypesOf(Tree.class).stream()
                 .filter(clazz -> !Modifier.isAbstract(clazz.getModifiers()))
-                .map(this::generateTestForTree);
+                .map(this::insertLotOfElementsAndTestContains);
     }
 
-    private DynamicTest generateTestForTree(Class<?> clazz) {
+    private DynamicTest insertLotOfElementsAndTestContains(Class<?> clazz) {
         return DynamicTest.dynamicTest("testing tree: " + clazz.getSimpleName(), () -> {
             List<Integer> elementList = new ArrayList<>();
             Tree<Integer> tree;
@@ -42,20 +41,11 @@ public class TreeTest {
 
             // todo bTree: 128 passing 129 not
             for (int i = 0; i < 5_000; i++) {
-                int newElement = i;
-                elementList.add(newElement);
-                tree.add(newElement);
-                assertTrue(tree.contains(newElement));
+                elementList.add(i);
+                tree.add(i);
+                assertTrue(tree.contains(i));
                 assertEquals(i + 1, tree.size());
             }
-
-//            int i = 0;
-//            for (int element : elementList) {
-//                tree.remove(element);
-//                i++;
-//                assertFalse(tree.contains(element));
-//                assertEquals(elementList.size() - i, tree.size());
-//            }
         });
     }
 }
