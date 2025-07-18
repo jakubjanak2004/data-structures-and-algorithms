@@ -42,8 +42,8 @@ class HashTableTest {
         table.put("dog", 5);
         table.put("cat", 7);
 
-        assertEquals(5, table.get("dog"));
-        assertEquals(7, table.get("cat"));
+        assertEquals(5, table.getValue("dog"));
+        assertEquals(7, table.getValue("cat"));
     }
 
     @ParameterizedTest(name = "testGetNonExistingKey with hashSet: {1}")
@@ -53,8 +53,8 @@ class HashTableTest {
 
         table.put("house", 10);
 
-        assertNull(table.get("tree"));
-        assertNull(table.get("car"));
+        assertNull(table.getValue("tree"));
+        assertNull(table.getValue("car"));
     }
 
     @ParameterizedTest(name = "testOverwriteValue with hashSet: {1}")
@@ -64,12 +64,12 @@ class HashTableTest {
 
         table.put("key", 10);
         assertTrue(table.containsKey("key"));
-        assertEquals(10, table.get("key"));
+        assertEquals(10, table.getValue("key"));
         assertEquals(1, table.size());
 
         table.put("key", 20); // Overwrite old value
         assertTrue(table.containsKey("key"));
-        assertEquals(20, table.get("key")); // New value must be returned
+        assertEquals(20, table.getValue("key")); // New value must be returned
         assertEquals(1, table.size()); // Size must NOT increase
     }
 
@@ -143,7 +143,7 @@ class HashTableTest {
 
         assertEquals(maximalElement, table.size());
         for (int i = 0; i < maximalElement; i++) {
-            assertEquals(i+1, table.get(i));
+            assertEquals(i+1, table.getValue(i));
         }
     }
 }
