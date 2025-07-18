@@ -1,6 +1,10 @@
 package algorithms;
 
+import dsa.algorithms.search.BinarySearch;
+import dsa.algorithms.search.InterpolationSearch;
 import dsa.algorithms.search.SearchAlgo;
+import dsa.algorithms.search.SequentialSearch;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
@@ -16,8 +20,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-// todo implement the different search for algorithms- that do not need sorted array
-public class SearchTest {
+class SearchTest {
     private static final int numberOfValues = 1000_000;
     private static final int NUMBER_OF_INSTANCES = 10;
     static Integer[] searchArray;
@@ -41,10 +44,10 @@ public class SearchTest {
     @TestFactory
     Stream<DynamicTest> testSearchAlgorithms() {
         return reflections.getMethodsAnnotatedWith(SearchAlgo.class).stream()
-                .flatMap(this::searchTest);
+                .flatMap(this::testSearchFindsElementThatIsPresent);
     }
 
-    private Stream<DynamicTest> searchTest(Method method) {
+    private Stream<DynamicTest> testSearchFindsElementThatIsPresent(Method method) {
         int step = sortedSearchArray.length / NUMBER_OF_INSTANCES;
 
         return IntStream.range(0, NUMBER_OF_INSTANCES)
@@ -56,7 +59,6 @@ public class SearchTest {
                             "Searching using method " + method.getName() + " in array of length " + sortedSearchArray.length + " at index " + i,
                             () -> {
                                 try {
-                                    // todo, the sentinel search should make its own copy of array instead of changing the global one
                                     Object result = method.invoke(null, sortedSearchArray.clone(), element);
                                     Assertions.assertEquals(i, result);
                                 } catch (Exception e) {
@@ -67,4 +69,33 @@ public class SearchTest {
                 });
     }
 
+    @Test
+    void sequentialSearchReturnsMinus1WhenElementNotPresent() {
+        Integer[] array = new Integer[]{1, 2, 3};
+        Assertions.assertEquals(-1, SequentialSearch.sequentialSearch(array, 4));
+    }
+
+    @Test
+    void sequentialSentinelSearchReturnsMinus1WhenElementNotPresent() {
+        Integer[] array = new Integer[]{1, 2, 3};
+        Assertions.assertEquals(-1, SequentialSearch.sequentialSentinelSearch(array, 4));
+    }
+
+    @Test
+    void InterpolationSearchReturnsMinus1WhenElementNotPresent() {
+        Integer[] array = new Integer[]{1, 2, 3};
+        Assertions.assertEquals(-1, InterpolationSearch.interpolationSearch(array, 4));
+    }
+
+    @Test
+    void recursiveBinarySearchReturnsOptimalPlaceForElementIfNotPresent() {
+        Integer[] array = new Integer[]{1, 2, 4};
+        Assertions.assertEquals(2, BinarySearch.recursiveBinarySearch(array, 3));
+    }
+
+    @Test
+    void iterativeBinarySearchReturnsOptimalPlaceForElementIfNotPresent() {
+        Integer[] array = new Integer[]{1, 2, 4};
+        Assertions.assertEquals(2, BinarySearch.iterativeBinarySearch(array, 3));
+    }
 }

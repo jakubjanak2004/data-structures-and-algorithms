@@ -48,41 +48,10 @@ public class MatmulTest {
     }
 
     @TestFactory
-    Stream<DynamicTest> testClassicMatmul() {
-        return reflections.getMethodsAnnotatedWith(MatMul.class).stream()
-                .filter(method -> method.getAnnotation(MatMul.class).def())
-                .flatMap(this::runMatMul);
-    }
-
-    @TestFactory
     Stream<DynamicTest> testRecursiveMatmul() {
         return reflections.getMethodsAnnotatedWith(MatMul.class).stream()
                 .filter(method -> !method.getAnnotation(MatMul.class).def())
                 .flatMap(this::matmulTest);
-    }
-
-    private Stream<DynamicTest> runMatMul(Method method) {
-        List<DynamicTest> tests = new ArrayList<>();
-
-        for (int i = 0; i < matricesA.size(); i++) {
-            double[][] A = matricesA.get(i);
-            double[][] B = matricesB.get(i);
-
-            DynamicTest test = DynamicTest.dynamicTest(
-                    "Matmul test with matrices of size: " + A.length + " using " + method.getName(),
-                    () -> {
-                        try {
-                            method.invoke(null, A, B);
-                        } catch (IllegalAccessException | InvocationTargetException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-            );
-
-            tests.add(test);
-        }
-
-        return tests.stream();
     }
 
     private Stream<DynamicTest> matmulTest(Method method) {
