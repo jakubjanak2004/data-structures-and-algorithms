@@ -3,7 +3,6 @@ package dsa.algorithms.sorting.linear;
 import dsa.algorithms.sorting.MaxValue;
 import dsa.algorithms.sorting.SortingAlgo;
 
-// todo finish commenting the radix sort
 public class RadixSort {
     static void countingSortForRadix(Integer[] arr, int start, int size, int exp) {
         // create output array
@@ -25,18 +24,17 @@ public class RadixSort {
 
         // iterate from last element to the start element
         for (i = size - 1; i >= start; i--) {
-            //
+            // move the element to the correct position
             output[count[(arr[i] / exp) % 10] - 1] = arr[i];
-            //
+            // decrement the count array
             count[(arr[i] / exp) % 10]--;
         }
 
-        //
+        // copy the sorted output array into the original
         for (i = start; i < size; i++)
             arr[i] = output[i];
     }
 
-    // todo implement radix for other number systems(binary,...)
     static public void radixSort(Integer[] arr, int max, int start, int size) {
         // iterate exp from 1 to the power of 10 eih condition that floor(max / exp) > 0
         for (int exp = 1; max / exp > 0; exp *= 10)
